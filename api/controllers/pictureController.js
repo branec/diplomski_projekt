@@ -16,7 +16,7 @@ exports.get_pictures = function (req, res) {
 exports.get_picture_by_QR = function (req, res) {
     global.sql.connect(global.sqlConfig, function() {
       var request = new sql.Request();
-      request.query('select * from SLIKA WHERE QRKOD_KOSULJICA = \'' + req.params.sheet +'\'' , function(err, recordset) {
+      request.query('select * from SLIKA WHERE KosuljicaId = \'' + req.params.sheet +'\'' , function(err, recordset) {
           if (err)
           res.send(err);
     

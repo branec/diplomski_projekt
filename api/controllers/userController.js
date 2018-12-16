@@ -19,7 +19,7 @@ exports.login = function (req, res) {
       var request = new sql.Request();
       var username = req.body.username; 
       var password = req.body.password;
-      var query = 'select COUNT(*) postoji FROM KORISNIK WHERE KORISNICKO_IME = \'' + username + '\' AND LOZINKA =\'' + password + '\'';
+      var query = 'select COUNT(*) postoji FROM Korisnik WHERE KorisnickoIme = \'' + username + '\' AND Lozinka =\'' + password + '\'';
 
       request.query(query, function(err, recordset) {
           if (err)
