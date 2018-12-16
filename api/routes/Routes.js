@@ -10,7 +10,8 @@ module.exports = function(app) {
   var sheets = require('../controllers/sheetController');
 
   app.route('/users')
-    .get(users.get_all_users);
+    .get(users.get_all_users)
+    .post(users.update_user);
 
     app.route('/login')
     .post(users.login);
