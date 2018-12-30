@@ -13,6 +13,9 @@ module.exports = function(app) {
     .get(users.get_all_users)
     .post(users.update_user);
 
+    app.route('/delUser')
+    .post(users.delete_user);
+
     app.route('/login')
     .post(users.login);
 

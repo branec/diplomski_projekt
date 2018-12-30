@@ -60,3 +60,26 @@ exports.update_user = function (req, res) {
 }
 
 
+exports.delete_user = function (req, res) {
+    global.sql.connect(global.sqlConfig, function() {
+      var request = new sql.Request();
+    
+      var username = req.body.KorisnickoIme; 
+      var password = req.body.Lozinka;
+      var query = 'DELETE FROM Korisnik WHERE Id = ' + req.body.Id;
+      request.query(query, function(err, recordset) {
+          if (err)
+          res.send(err);
+
+          if(recordset.rowsAffected.length === 1){
+            res.json({odgovor:"true"})
+          }else{
+            res.json({odgovor:"false"})
+          }
+
+          sql.close();
+      });
+  });
+}
+
+
