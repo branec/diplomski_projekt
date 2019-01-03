@@ -37,6 +37,15 @@ module.exports = function(app) {
     app.route('/exams/:subject')
     .get(exams.get_exams);
 
+    app.route('/exams/newExam')
+    .post(exams.new_exams);
+
+    app.route('/exams/updateExam')
+    .post(exams.update_exams);
+
+    app.route('/exams/deleteExam')
+    .post(exams.delete_exams);
+
     app.route('/department/:ID')
     .get(departments.get_department);
 
@@ -55,6 +64,15 @@ module.exports = function(app) {
     app.route('/pictures/:sheet')
     .get(pictures.get_picture_by_QR);
 
+    app.route('picture/newPicture')
+    .post(picture.new_picture);
+
+    app.route('picture/updatePicture')
+    .post(picture.update_picture);
+
+    app.route('picture/deletePicture')
+    .post(picture.delete_picture);
+
     app.route('/sheets')
     .get(sheets.get_all_sheets);
 
@@ -63,6 +81,16 @@ module.exports = function(app) {
 
     app.route('/sheets/:users')
     .get(sheets.get_sheet_by_user);
+
+    app.route('/sheets/newSheet')
+    .get(sheets.new_sheet);
+
+    app.route('/sheets/updateSheet')
+    .get(sheets.update_sheet);
+
+    app.route('/sheets/deleteSheet')
+    .get(sheets.delete_sheet);
+
 
     
 
