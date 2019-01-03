@@ -19,8 +19,20 @@ module.exports = function(app) {
     app.route('/login')
     .post(users.login);
 
+    app.route('/newUser')
+    .post(users.new_user);
+
     app.route('/subjects/:user')
     .get(subjects.get_subjects);
+
+    app.route('/subjects/newSubject')
+    .post(subjects.new_subject);
+
+    app.route('/subject/updateSubject')
+    .post(subjects.update_subject);
+
+    app.route('/subject/deleteSubject')
+    .post(subjects.delete_subject);
 
     app.route('/exams/:subject')
     .get(exams.get_exams);
