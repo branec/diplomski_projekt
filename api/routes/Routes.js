@@ -38,13 +38,13 @@ module.exports = function(app) {
     .get(exams.get_exams);
 
     app.route('/exams/newExam')
-    .post(exams.new_exams);
+    .post(exams.new_exam);
 
     app.route('/exams/updateExam')
-    .post(exams.update_exams);
+    .post(exams.update_exam);
 
     app.route('/exams/deleteExam')
-    .post(exams.delete_exams);
+    .post(exams.delete_exam);
 
     app.route('/department/:ID')
     .get(departments.get_department);
@@ -65,13 +65,13 @@ module.exports = function(app) {
     .get(pictures.get_picture_by_QR);
 
     app.route('picture/newPicture')
-    .post(picture.new_picture);
+    .post(pictures.new_picture);
 
     app.route('picture/updatePicture')
-    .post(picture.update_picture);
+    .post(pictures.update_picture);
 
     app.route('picture/deletePicture')
-    .post(picture.delete_picture);
+    .post(pictures.delete_picture);
 
     app.route('/sheets')
     .get(sheets.get_all_sheets);
