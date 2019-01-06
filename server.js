@@ -91,6 +91,16 @@ app.route('/login')
       }
   });
 
+  app.get('/scanner', (req, res) => {
+    if (req.session.user && req.cookies.user_sid) {
+        res.sendFile(__dirname + '/public/scanner.html');
+    } else {
+        res.redirect('/login');
+    }
+});
+
+  
+
   /* sandrina brljotina */
   app.get('/studenti', (req, res) => {
         global.sql.connect(global.sqlConfig, function() {
