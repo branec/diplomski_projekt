@@ -22,7 +22,7 @@
             <li><a href="/dashboard">Naslovnica</a></li>
             <li><a href="/predmeti">Predmeti</a></li>
             <li><a href="/ispiti">Ispiti</a></li>
-            <li><a href="studenti">Studenti</a></li>
+            <li><a href="/studenti">Studenti</a></li>
             <li><a href="/logout">Odjava</a></li>
         </ul>
         </div>
@@ -59,34 +59,22 @@
 
     </div>
     <div class="table-content">
-            <a href="/newUser" >Dodaj novog studenta</a>
-        <h2>Popis svih studenata:</h2>
+        <h2>Popis svih odjela:</h2>
         <table class="table">
             <th></th>
-            <th>Ime</th>
-            <th>Prezime</th>
-            <th>JMBAG</th>
+            <th>Naziv</th>
+            <th>Ovlastena osoba</th>
 
-            <%for (i=0; i<students.length; i++){%>
+            <% departments.forEach( department => { %>
                 <tr>
-                    <td><%= i+1 %>.</td>
-                    <td><%= students[i].Ime %></td>
-                    <td><%= students[i].Prezime %></td>
-                    <td><%= students[i].JMBAG %></td>
-                    <td>
-                        <form method="POST" action="/delUser">
-                            <input type="hidden" name="id" value="<% students[i].id %>" />
-                            <button type="submit">Delete</button>
-                    </form>
-                    </td>
-
+                    <td><%= department.id %>.</td>
+                    <td><%= department.Naziv %></td>
+                    <td><%= department.ovlastena_osoba %></td>
                 </tr>
             <% } %>
         </table>
 
     </div>
-
-    
     <!-- /#wrapper -->
 
     <!-- Bootstrap core JavaScript -->

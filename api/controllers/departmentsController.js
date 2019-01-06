@@ -6,9 +6,9 @@ exports.get_departments = function (req, res) {
       request.query('select * from Zavod', function(err, recordset) {
           if (err)
           res.send(err);
-    
-          res.json(recordset.recordsets);
           sql.close();
+          console.log(recordset.recordsets);
+          res.render('departments', {departments:recordset.recordsets})
       });
   });
 }

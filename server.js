@@ -132,6 +132,39 @@ app.route('/login')
                 res.render('ispiti', {ispiti:ispit});
             }); });
     });
+
+app.get('/newUser', (req, res) => {
+    res.render('novi_user');
+});
+
+    app.post('/newUser', (req, res) => {
+        global.sql.connect(global.sqlConfig, function() {
+          var request = new sql.Request();
+      
+          var username = req.body.KorisnickoIme; 
+          var password = req.body.Lozinka;
+          var name = req.body.Ime;
+          var jmbag = req.body.JMBAG;
+          var surname = req.body.Prezime;
+          var date = req.body.Datum;
+          var type = req.body.TipId;
+          var id = req.body.Id;
+          var query = `INSERT INTO (KorisnickoIme,Ime,JMBAG,Prezime,Datum,Lozinka,TipId) Korisnik Values (${username},${name},${jmbag},${surname},${date},${password},${type})` ;
+       
+          request.query(query, function(err, recordset) {
+                if (err)
+                res.send(err);
+      
+                if(recordset.rowsAffected.length === 1){
+                  res.json({odgovor:"true"})
+                }else{
+                  res.json({odgovor:"false"})
+                }
+      
+                sql.close();
+            });
+        });
+    }); 
   
 /* kraj sandrine brljotine */
  
