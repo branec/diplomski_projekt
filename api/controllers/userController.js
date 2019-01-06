@@ -3,10 +3,9 @@
 exports.get_all_users = function (req, res) {
       global.sql.connect(global.sqlConfig, function() {
         var request = new sql.Request();
-        request.query('select * from KORISNIK', function(err, recordset) {
+        request.query('select * from KORISNIK', function(err, recordset, fields) {
             if (err)
-            res.send(err);
-      
+            res.send(err); 
             res.json(recordset.recordsets);
             sql.close();
         });

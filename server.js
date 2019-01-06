@@ -1,3 +1,4 @@
+var subjects = require('./api/controllers/userController.js');
 var express = require('express'),
   app = express(),
   port = process.env.PORT || 3000,
@@ -6,6 +7,11 @@ var express = require('express'),
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
 app.use(cookieParser());
+var path = require("path");
+
+app.set('views', path.join(__dirname, '/public'));
+
+app.set('view engine', 'ejs');
 
 app.use(session({
   key: 'user_sid',
@@ -18,7 +24,6 @@ app.use(session({
 }));
 
 
-var path = require("path");
 global.sql = require('mssql');
 global.sqlConfig = {
     user: 'DPVM',
@@ -86,6 +91,51 @@ app.route('/login')
       }
   });
 
+  /* sandrina brljotina */
+  app.get('/studenti', (req, res) => {
+        global.sql.connect(global.sqlConfig, function() {
+            var request = new sql.Request();
+            var query = 'select * FROM Korisnik WHERE TipId=1';
+            request.query(query, function(err, recordset) {
+                if (err)
+                res.send(err);
+                var student = (recordset.recordset);
+                sql.close();
+                res.render('studenti', {students:student});
+            }); });
+    });
+
+    app.get('/predmeti', (req, res) => {
+        global.sql.connect(global.sqlConfig, function() {
+            var request = new sql.Request();
+            var query = 'select * from PREDMET, ZAVOD where Predmet.ZavodID=ZAVOD.Id';
+            request.query(query, function(err, recordset) {
+                if (err)
+                res.send(err);
+                var predmet = (recordset.recordset);
+                sql.close();
+                console.log(predmet);
+                res.render('predmeti', {predmeti:predmet});
+            }); });
+    });
+
+    app.get('/ispiti', (req, res) => {
+        global.sql.connect(global.sqlConfig, function() {
+            var request = new sql.Request();
+            var query = 'select * from ISPIT';
+            request.query(query, function(err, recordset) {
+                if (err)
+                res.send(err);
+                var ispit = (recordset.recordset);
+                sql.close();
+                console.log(ispit);
+                res.render('ispiti', {ispiti:ispit});
+            }); });
+    });
+  
+/* kraj sandrine brljotine */
+ 
+
 app.get('/logout', (req, res) => {
   if (req.session.user && req.cookies.user_sid) {
       res.clearCookie('user_sid');
@@ -94,6 +144,7 @@ app.get('/logout', (req, res) => {
       res.redirect('/login');
   }
 });
+
 
 app.use(function (req, res, next) {
 res.status(404).send("Sorry can't find that!")

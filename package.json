@@ -16,6 +16,7 @@
     "cookie-parser": "^1.4.3",
     "express": "^4.16.4",
     "express-session": "^1.15.6",
-    "mssql": "^4.3.0"
+    "mssql": "^4.3.0",
+    "nodegit": "^0.23.0"
   }
 }

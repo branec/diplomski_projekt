@@ -9,9 +9,13 @@ module.exports = function(app) {
   var pictures = require('../controllers/pictureController');
   var sheets = require('../controllers/sheetController');
 
-  app.route('/users')
+
+// sandrin komentar 
+  /*app.route('/predmeti')
     .get(users.get_all_users)
-    .post(users.update_user);
+    .post(users.update_user);*/
+// kraj sandrinog komentara 
+
 
     app.route('/delUser')
     .post(users.delete_user);

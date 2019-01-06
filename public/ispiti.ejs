@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Evidencija za profesore i studente</title>
+    <link href="/scripts/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/scripts/sidebar.css" rel="stylesheet">
+    <link href="/scripts/styles.css" rel="stylesheet">
+
+</head>
+
+<body onload='Draw()'>
+
+    <header>
+        <div class="header-middle">
+        <ul class="header-navigation">
+            <li><img src="/images/fer_logo.PNG" /></li>
+            <li><a href="/dashboard">Naslovnica</a></li>
+            <li><a href="/predmeti">Predmeti</a></li>
+            <li><a href="/ispiti">Ispiti</a></li>
+            <li><a href="/studenti">Studenti</a></li>
+            <li><a href="/logout">Odjava</a></li>
+        </ul>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+                <li class="sidebar-brand">
+                    <a href="#">
+                        Naslovnica
+                    </a>
+                </li>
+                <li>
+                    <a href="/predmeti">Predmeti</a>
+                </li>
+                <li>
+                    <a href="/ispiti">Ispiti</a>
+                </li>
+                <li>
+                    <a href="/studenti">Studenti</a>
+                </li>
+                <li>
+                    <a href="/logout">Odjava</a>
+                </li>
+            </ul>
+        </div>
+
+        <div id="page-content-wrapper">
+            <div class="container-fluid">
+                <a href="#menu-toggle" class="btn btn-secondary" id="menu-toggle"><img width="30px" src="images/ham-meni.png" /></a>
+            </div>
+        </div>
+  
+
+    </div>
+    <div class="table-content">
+        <h2>Popis svih ispita:</h2>
+        <table class="table">
+            <th></th>
+            <th>Naziv</th>
+            <th>Prostorija</th>
+            <th>Vrijeme</th>
+
+            <%for (i=0; i<ispiti.length; i++){%>
+                <tr>
+                    <td><%= i+1 %>.</td>
+                    <td><%= ispiti[i].Naziv %></td>
+                    <td><%= ispiti[i].Prostorija %></td>
+                    <td><%= ispiti[i].VrijemeOd %></td>
+
+                </tr>
+            <% } %>
+        </table>
+
+        <img id='theImg' src='images/example.png' width='536px' >
+<canvas style="position:absolute; left:0px;display:inline-block;" id='myCanvas' width='536px' height='694px'></canvas>
+<script>
+
+function Draw(){
+    
+    var canvas, ctx, flag = false,
+        prevX = 0,
+        currX = 0,
+        prevY = 0,
+        currY = 0,
+        dot_flag = false;
+
+    var x = "red", y = 2;
+    var img = document.getElementById("theImg");
+    var canvas = document.getElementById("myCanvas");
+  
+    canvas.style.left = img.offsetLeft + "px";
+    canvas.style.top = img.offsetTop + "px";
+  
+    var ctx = canvas.getContext("2d");
+    canvas.addEventListener("mousemove", function (e) {
+        findxy('move', e)
+    }, false);
+    canvas.addEventListener("mousedown", function (e) {
+           findxy('down', e)
+    }, false);
+    canvas.addEventListener("mouseup", function (e) {
+           findxy('up', e)
+    }, false);
+    canvas.addEventListener("mouseout", function (e) {
+           findxy('out', e)
+    }, false);
+
+
+    function findxy(res, e) {
+        if (res == 'down') {
+            prevX = currX;
+            prevY = currY;
+            currX = e.clientX - canvas.offsetLeft;
+            currY = e.clientY - canvas.offsetTop;
+    
+            flag = true;
+            dot_flag = true;
+            if (dot_flag) {
+                ctx.beginPath();
+                ctx.fillStyle = x;
+                ctx.fillRect(currX, currY, 2, 2);
+                ctx.closePath();
+                dot_flag = false;
+            }
+        }
+        if (res == 'up' || res == "out") {
+            flag = false;
+        }
+        if (res == 'move') {
+            if (flag) {
+                prevX = currX;
+                prevY = currY;
+                currX = e.clientX - canvas.offsetLeft;
+                currY = e.clientY - canvas.offsetTop;
+                draw();
+            }
+        }
+    }
+   
+    
+    function draw() {
+        ctx.beginPath();
+        ctx.moveTo(prevX, prevY);
+        ctx.lineTo(currX, currY);
+        ctx.strokeStyle = x;
+        ctx.lineWidth = y;
+        ctx.stroke();
+        ctx.closePath();
+    }
+
+}
+
+</script>
+
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="/scripts/vendor/jquery/jquery.min.js"></script>
+    <script src="/scripts/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Menu Toggle Script -->
+    <script>
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+        $("#menu-toggle").addClass("opened-hamburger");
+    });
+    </script>
+
+</body>
+
+</html>

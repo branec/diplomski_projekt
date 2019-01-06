@@ -11,6 +11,11 @@ body#LoginForm{ background-image:url("https://hdwallsource.com/img/2014/9/blur-2
   height: 50px;
   line-height: 50px;
 }
+.opened-hamburger{
+  display:block !important;
+  width:300px;
+  color:blue;
+}
 .main-div {
   background: #ffffff none repeat scroll 0 0;
   border-radius: 2px;
@@ -18,7 +23,12 @@ body#LoginForm{ background-image:url("https://hdwallsource.com/img/2014/9/blur-2
   max-width: 38%;
   padding: 50px 70px 70px 71px;
 }
-
+a {
+  color:white;
+}
+a:hover{
+  color:white;
+}
 .login-form .form-group {
   margin-bottom:10px;
 }
@@ -27,6 +37,12 @@ body#LoginForm{ background-image:url("https://hdwallsource.com/img/2014/9/blur-2
   color: #777777;
   font-size: 14px;
   text-decoration: underline;
+}
+#wrapper{
+  display:none !important;
+}
+#page-content-wrapper{
+  display:none !important;
 }
 .login-form  .btn.btn-primary {
   background: #f0ad4e none repeat scroll 0 0;
@@ -51,3 +67,99 @@ body#LoginForm{ background-image:url("https://hdwallsource.com/img/2014/9/blur-2
 }
 .back { text-align: left; margin-top:10px;}
 .back a {color: #444444; font-size: 13px;text-decoration: none;}
+header{
+  text-align: center;
+}
+header ul {
+  list-style-type: none;
+  color:white;
+  padding:30px 20px;
+  font-size: 18px;
+  text-transform: uppercase;
+}
+header ul > li {
+  display: inline-block;
+  width:15%;
+}
+
+header ul > li > img{
+  width:100%;
+  max-width:90px;
+}
+.header-middle{
+  width:100%;
+  background: #333 none repeat scroll 0 0;
+  font-family: sans-serif;
+}
+.table-content{
+  width:80%;
+  margin:auto;
+  margin-top:5%;
+}
+.table{
+  margin-top:7%;
+}
+@media (min-width: 700px) and (max-width: 1100px) {
+  header ul {
+    padding:20px 15px;
+    font-size: 15px;
+    text-transform: uppercase;
+  }
+
+  header ul > li > img{
+    width:100%;
+    max-width:60px;
+  }
+}
+@media (min-width:320px) and (max-width:699px){
+  #menu-toggle{
+    display: inline-block !important;
+    left:0px;
+    z-index: 5;
+    height:40px;
+    max-width:80px;
+  }
+  header ul > li:not(:first-child) {
+    display: none !important;
+  }
+  header{ 
+    text-align: left;
+  }
+  header ul > li:first-child {
+    margin-left:10%;
+  }
+  header ul{
+    padding:15px 10px;
+  }
+  #wrapper{
+    display:block !important;
+  }
+  #page-content-wrapper{
+    display:block !important;
+    top:0px;
+    width:140px;
+    right:0px;
+  }
+  #sidebar-wrapper{
+    top:0px;
+    color:white;
+  }
+  #wrapper.toggled #page-content-wrapper{
+    margin-right:0px;
+  }
+  
+  
+}
+/*@media (min-width: 360px) and (max-width: 600px) {
+ 
+  #wrapper{
+    display:block !important;
+  }
+  #page-content-wrapper{
+    display:block !important;
+  }
+  header{
+    display: none !important;
+  }
+  
+}*/
