@@ -59,8 +59,26 @@ module.exports = function(app) {
     app.route('/departmentsbyuser/:user')
     .get(departments.get_department_by_boss);
 
+    app.route('/departments/newDepartment')
+    .post(departments.new_department);
+
+    app.route('/departments/updateDepartment')
+    .post(departments.update_department);
+
+    app.route('/departments/deleteDepartment')
+    .post(departments.delete_department);
+
     app.route('/types')
     .get(types.get_types);
+
+    app.route('/types')
+    .post(types.new_type);
+
+    app.route('/types')
+    .post(types.update_type);
+
+    app.route('/types')
+    .post(types.delete_type);
 
     app.route('/pictures')
     .get(pictures.get_pictures);
