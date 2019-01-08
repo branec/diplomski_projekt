@@ -99,6 +99,11 @@ header ul > li > img{
 .table{
   margin-top:7%;
 }
+.exam{
+  display:inline-block;
+  width: 600px;
+  margin-top:5%;
+}
 @media (min-width: 700px) and (max-width: 1100px) {
   header ul {
     padding:20px 15px;

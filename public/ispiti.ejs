@@ -19,11 +19,10 @@
         <div class="header-middle">
         <ul class="header-navigation">
             <li><img src="/images/fer_logo.PNG" /></li>
-            <li><a href="/dashboard">Naslovnica</a></li>
-            <li><a href="/predmeti">Predmeti</a></li>
-            <li><a href="/ispiti">Ispiti</a></li>
-            <li><a href="/studenti">Studenti</a></li>
-            <li><a href="/scanner">Skener</a></li>
+            <li><a href="/scanner">Dodaj novi ispit</a></li>
+            <li>|</li>
+            <li><a href="/ispiti">Rezultati</a></li>
+            <li>|</li>
             <li><a href="/logout">Odjava</a></li>
         </ul>
         </div>
@@ -31,19 +30,12 @@
     <div id="wrapper">
         <div id="sidebar-wrapper">
             <ul class="sidebar-nav">
-                <li class="sidebar-brand">
-                    <a href="#">
-                        Naslovnica
-                    </a>
+               
+                <li>
+                    <a href="/predmeti">Dodaj novi ispit</a>
                 </li>
                 <li>
-                    <a href="/predmeti">Predmeti</a>
-                </li>
-                <li>
-                    <a href="/ispiti">Ispiti</a>
-                </li>
-                <li>
-                    <a href="/studenti">Studenti</a>
+                    <a href="/ispiti">Rezultati</a>
                 </li>
                 <li>
                     <a href="/logout">Odjava</a>
@@ -61,24 +53,19 @@
     </div>
     <div class="table-content">
         <h2>Popis svih ispita:</h2>
-        <table class="table">
-            <th></th>
-            <th>Naziv</th>
-            <th>Prostorija</th>
-            <th>Vrijeme</th>
+        
 
-            <%for (i=0; i<ispiti.length; i++){%>
-                <tr>
-                    <td><%= i+1 %>.</td>
-                    <td><%= ispiti[i].Naziv %></td>
-                    <td><%= ispiti[i].Prostorija %></td>
-                    <td><%= ispiti[i].VrijemeOd %></td>
+            <%for (i=0; i<3; i++){%>
+                <div class="exam">
+                    <p><%= ispiti[0].Naziv %></p>
+                    <p><%= ispiti[0].Prostorija %></p>
+                    <p><%= ispiti[0].VrijemeOd %></p>
+                    <p>Status: ispravljanje u tijeku</p>
+                    <img id ='theImg' width='500px' src="https://www.math.upenn.edu/ugrad/calc/m103/exams/103S08answersPg1.jpg" />
 
-                </tr>
+                </div>
             <% } %>
-        </table>
 
-        <img id='theImg' src='images/example.png' width='536px' >
 <canvas style="position:absolute; left:0px;display:inline-block;" id='myCanvas' width='536px' height='694px'></canvas>
 <script>
 
