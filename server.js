@@ -73,7 +73,7 @@ app.route('/login')
         
                   if(recordset.recordset[0].postoji === 1){
                     req.session.user = username;
-                res.redirect('/dashboard');
+                res.redirect('/dashboard/' + username);
                   }else{
                     res.redirect('/login');
                   }
@@ -83,9 +83,9 @@ app.route('/login')
 
     });
 
-    app.get('/dashboard', (req, res) => {
+    app.get('/dashboard/:user', (req, res) => {
       if (req.session.user && req.cookies.user_sid) {
-          res.sendFile(__dirname + '/public/dash.html');
+          res.sendFile(__dirname + '/public/dash_student.html');
       } else {
           res.redirect('/login');
       }
@@ -189,12 +189,14 @@ app.get('/logout', (req, res) => {
 });
 
 
-app.use(function (req, res, next) {
-res.status(404).send("Sorry can't find that!")
-});
+
 
 var routes = require('./api/routes/Routes');
 routes(app);
+
+app.use(function (req, res, next) {
+    res.status(404).send("Sorry can't find that!")
+    });
 
 app.listen(port);
 

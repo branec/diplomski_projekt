@@ -52,9 +52,17 @@
         </div>
 
         <div id="page-content-wrapper">
+
+            <div id="content-predmeti">
+
+
+            </div>
+
             <div class="container-fluid">
                 <a href="#menu-toggle" class="btn btn-secondary" id="menu-toggle"><img width="30px" src="images/ham-meni.png" /></a>
             </div>
+
+
         </div>
   
 
@@ -77,15 +85,19 @@
     <script>
     var request = new XMLHttpRequest();
 
-        request.open('GET', 'https://ghibliapi.herokuapp.com/films', true);
+    var url = window.location.href;
+    var parts = url.split("/")
+    var username = parts[4];
+
+        request.open('GET', 'http://localhost:3000/subjects/' + username, true);
         request.onload = function () {
 
   // Begin accessing JSON data here
   var data = JSON.parse(this.response);
 
   if (request.status >= 200 && request.status < 400) {
-    data.forEach(movie => {
-      console.log(movie.title);
+    data.forEach(premdet => {
+      console.log(predmet.NAZIV);
     });
   } else {
     console.log('error');

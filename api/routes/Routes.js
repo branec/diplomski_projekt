@@ -20,9 +20,6 @@ module.exports = function(app) {
     app.route('/delUser')
     .post(users.delete_user);
 
-    app.route('/login')
-    .post(users.login);
-
     app.route('/newUser')
     .post(users.new_user);
 
