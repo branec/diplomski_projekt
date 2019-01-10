@@ -99,6 +99,14 @@ app.route('/login')
     }
 });
 
+app.get('/uvid', (req, res) => {
+    if (req.session.user && req.cookies.user_sid) {
+        res.sendFile(__dirname + '/public/uvid.html');
+    } else {
+        res.redirect('/login');
+    }
+});
+
   
 
   /* sandrina brljotina */
