@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<head>
+	
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+
+	<script type="text/javascript" src="scripts/fancybox/jquery.mousewheel-3.0.4.pack.js"></script>
+	<script type="text/javascript" src="scripts/fancybox/jquery.fancybox-1.3.4.pack.js"></script>
+	<link rel="stylesheet" type="text/css" href="scripts/fancybox/jquery.fancybox-1.3.4.css" media="screen" />
+ 	<link rel="stylesheet" href="scripts/styles.css" />
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("a[rel=example_group]").fancybox();
+		});
+	</script>
+</head>
+<body>
+        <header>
+                <div class="header-middle">
+                <ul class="header-navigation">
+                    <li><img src="/images/fer_logo.PNG" /></li>
+                    <li><a href="/scanner">Dodaj novi ispit</a></li>
+                    <li>|</li>
+                    <li><a href="/ispiti">Pregled rezultata</a></li>
+                    <li>|</li>
+                    <li><a href="/logout">Odjava</a></li>
+                </ul>
+                </div>
+            </header>
+            <div id="wrapper">
+                    <div id="sidebar-wrapper">
+                        <ul class="sidebar-nav">
+                         
+                            <li>
+                                <a href="/scanner">Dodaj novi ispit</a>
+                            </li>
+                            <li>
+                                <a href="/ispiti">Pregled rezultata</a>
+                            </li>
+                            <li>
+                                <a href="/logout">Odjava</a>
+                            </li>
+                        </ul>
+                    </div>
+            
+                    <div id="page-content-wrapper">
+                        <div class="container-fluid">
+                            <a href="#menu-toggle" class="btn btn-secondary" id="menu-toggle"><img width="30px" src="images/ham-meni.png" /></a>
+                        </div>
+                    </div>
+              
+            
+                </div>
+
+<h2 style="margin-left:10%;margin-top:5%;">1. Kolokvij iz predmeta Računalna forenzika</h2>
+<div id="content">
+	<p>
+		<a rel="example_group" href="images/example.png" title="Lorem ipsum dolor sit amet"><img width="250px" alt="" src="images/example.png" /></a>
+		<a rel="example_group" href="images/example.png" title=""><img alt="" width="250px" src="images/example.png" /></a>
+		<a rel="example_group" href="images/example.png" title=""><img alt="" width="250px" src="images/example.png" /></a>
+    </p>
+</div>
+<div class="exam-details">
+    <div class="first-section">
+            <p>Ispravio: Vedran Mornar</p>
+            <p>Datum ispravljanja: 1.10.2018.</p>
+            <p>Dvorana: D2</p>
+            <P>Vrijeme predaje ispita: 29.09.2018.</p>
+            <p>Bodovi: 40/80</p>
+            <p>Rang: 71/150</p>
+    </div>
+    <div class="second-section">
+            <p>1. zadatak: 10/20 bodova</p>
+            <p>2. zadatak: 30/40 bodova</p>
+            <p>3.zadatak: 40/40 bodova</p> 
+            <p>Komentar nastavnika: Pogrešna formula u x zadatku.</p>
+    </div>
+   
+</div>
+</body>
+</html>
