@@ -10,6 +10,7 @@
     <link href="/scripts/sidebar.css" rel="stylesheet">
     <link href="/scripts/styles.css" rel="stylesheet">
   <script src="/scripts/jquery-1.11.3.min.js"></script>
+  <script src="/scripts/bootstrap.bundle.min.js"></script>
 </head>
 <body>
   <header>
@@ -24,22 +25,34 @@
     </ul>
     </div>
 </header>
-    <div class="qr_read">
 
+
+    <div class="qr_read">
+        <select  id="exams-list" class="form-control">
+        </select>
+
+          <div class="input-group mb-3 mt-3">
+              <input id="barcode-input" idtype="text" class="form-control" placeholder="Broj kosuljice" aria-label="Broj kosuljice" aria-describedby="basic-addon2">
+              <div class="input-group-append">
+                <button  id ="go" class="btn btn-outline-secondary" type="button">Skeniraj</button>
+              </div>
+            </div>
+            
         <div class="select">
           <label for="videoSource">Kamera: </label><select id="videoSource"></select>
         </div>
-        <button id="go" style="width:300px; height:60px; margin-bottom:5%;border:none;border-radius:15px;">Očitaj barkod</button>
        
         <div>
           <video muted autoplay id="video" playsinline="true"></video>
           <canvas id="pcCanvas" width="640" height="480" style="display: none; float: bottom;"></canvas>
           <canvas id="mobileCanvas" width="240" height="320" style="display: none; float: bottom;"></canvas>
         </div>
-      
 
+        <div id="getdata">getdata</div>
+      
     </div>
   </body>
 <script async src="/scripts/zxing.js"></script>
 <script src="/scripts/video.js"></script>
+<script src="/scripts/newSheet.js"></script>
 </html>

@@ -73,7 +73,7 @@ app.route('/login')
         
                   if(recordset.recordset[0].postoji === 1){
                     req.session.user = username;
-                res.redirect('/dashboard');
+                res.redirect('/dashboard?user=' + username);
                   }else{
                     res.redirect('/login');
                   }
@@ -196,13 +196,13 @@ app.get('/logout', (req, res) => {
   }
 });
 
+var routes = require('./api/routes/Routes');
+routes(app);
 
 app.use(function (req, res, next) {
 res.status(404).send("Sorry can't find that!")
 });
 
-var routes = require('./api/routes/Routes');
-routes(app);
 
 app.listen(port);
 
