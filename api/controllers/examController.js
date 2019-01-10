@@ -3,7 +3,7 @@
 exports.get_exams = function (req, res) {
     global.sql.connect(global.sqlConfig, function() {
       var request = new sql.Request();
-      request.query('select * from ISPIT WHERE PredmetId = ' + req.params.subject , function(err, recordset) {
+      request.query('select * from ISPIT' , function(err, recordset) {
           if (err)
           res.send(err);
     
@@ -11,6 +11,19 @@ exports.get_exams = function (req, res) {
           sql.close();
       });
   });
+}
+
+exports.get_exams_for_subject = function (req, res) {
+    global.sql.connect(global.sqlConfig, function() {
+        var request = new sql.Request();
+        request.query(`SELECT * FROM Ispit WHERE Ispit.PredmetId = ${req.params.subjects}`, function(err, recordset) {
+        if (err)
+          res.send(err);
+    
+          res.json(recordset.recordsets);
+          sql.close();
+        });
+    });
 }
 
 exports.new_exam = function (req, res) {

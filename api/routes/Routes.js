@@ -18,7 +18,7 @@ module.exports = function(app) {
 
 
     app.route('/delUser')
-    .post(users.delete_user);
+    .delete(users.delete_user);
 
     app.route('/login')
     .post(users.login);
@@ -33,28 +33,31 @@ module.exports = function(app) {
     .post(subjects.new_subject);
 
     app.route('/subject/updateSubject')
-    .post(subjects.update_subject);
+    .put(subjects.update_subject);
 
     app.route('/subject/deleteSubject')
-    .post(subjects.delete_subject);
+    .delete(subjects.delete_subject);
+
+    app.route('/exams')
+    .get(exams.get_exams);
 
     app.route('/exams/:subject')
-    .get(exams.get_exams);
+    .get(exams.get_exams_for_subject);
 
     app.route('/exams/newExam')
     .post(exams.new_exam);
 
     app.route('/exams/updateExam')
-    .post(exams.update_exam);
+    .put(exams.update_exam);
 
     app.route('/exams/deleteExam')
-    .post(exams.delete_exam);
-
-    app.route('/department/:ID')
-    .get(departments.get_department);
+    .delete(exams.delete_exam);
 
     app.route('/departments')
     .get(departments.get_departments);
+
+    app.route('/department/:ID')
+    .get(departments.get_department);
 
     app.route('/departmentsbyuser/:user')
     .get(departments.get_department_by_boss);
