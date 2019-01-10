@@ -3,11 +3,7 @@
 exports.get_subjects = function (req, res) {
     global.sql.connect(global.sqlConfig, function() {
       var request = new sql.Request();
-<<<<<<< HEAD
       request.query('select PREDMET.ID,PREDMET.NAZIV from KorisnikPredmet LEFT OUTER JOIN PREDMET ON PREDMET.ID = KORISNIKPREDMET.PREDMETID LEFT OUTER JOIN KORISNIK ON KORISNIK.ID = KORISNIKPREDMET.KORIsNIKID WHERE KORISNIK.KORISNICKOIME = \'' + req.params.user +'\'' , function(err, recordset) {
-=======
-      request.query('select PREDMET.ID,PREDMET.NAZIV from KorisnikPredmet LEFT OUTER JOIN PREDMET ON PREDMET.ID = KORISNIKPREDMET.PREDMETID WHERE KORISNIKPREDMET.KORISNIKID = ' + req.params.user , function(err, recordset) {
->>>>>>> dd9cbd3982e5c9a24bd6b0d602715e235f1d7bfb
           if (err)
           res.send(err);
     
