@@ -53,18 +53,29 @@
     </div>
     <div class="table-content">
         <h2>Popis svih ispita:</h2>
-        
+        <table class="table">
+            <th></th>
+            <th>Naziv</th>
+            <th>Predmet</th>
+            <th>Vrijeme predaje</th>
+            <th>Status ispravljanja</th>
+            <th>Bodovi</th>
+            <th></th>
 
-            <%for (i=0; i<3; i++){%>
-                <div class="exam">
-                    <p><%= ispiti[0].Naziv %></p>
-                    <p><%= ispiti[0].Prostorija %></p>
-                    <p><%= ispiti[0].VrijemeOd %></p>
-                    <p>Status: ispravljanje u tijeku</p>
-                    <img id ='theImg' width='500px' src="https://www.math.upenn.edu/ugrad/calc/m103/exams/103S08answersPg1.jpg" />
-
-                </div>
+            <% for (i=0; i<20; i++){%>
+                <tr>
+                    <td style="text-align:right;padding-right:3%;"><b><%= (i+1) %>.</b> </td>
+                    <td>1. Kolokvij</td>
+                    <td>Računalna forenzika</td>
+                    <td>28.10.2018. 10:00h</td>
+                    <td>Ispravljanje u tijeku</td>
+                    <td class=>/</td>
+                    <td>Uvid</td>
+                </tr>
             <% } %>
+        </table>
+
+    <!--<img id ='theImg' width='500px' src="https://www.math.upenn.edu/ugrad/calc/m103/exams/103S08answersPg1.jpg" />
 
 <canvas style="position:absolute; left:0px;display:inline-block;" id='myCanvas' width='536px' height='694px'></canvas>
 <script>
@@ -144,7 +155,7 @@ function Draw(){
 
 }
 
-</script>
+</script>-->
 
     </div>
     <!-- /#wrapper -->
