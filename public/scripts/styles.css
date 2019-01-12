@@ -160,6 +160,28 @@ table{
 table td:not(:first-child) {
   width:22%;
 }
+.prof-activity{
+  width:100%;
+  margin-left:auto;
+  margin-right:auto;
+  margin-top:2%;
+}
+.prof-activity thead{
+  margin-left:5%;
+}
+.welcome-text{
+  width:80%;
+  margin-left:auto;
+  margin-right:auto;
+  margin-top:5%;
+}
+.prof-activity td{
+  width:15%;
+}
+.center-activity{
+  text-align:center;
+  margin-top:10%;
+}
 th{
   letter-spacing: 1px;
 }
