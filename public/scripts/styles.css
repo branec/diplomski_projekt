@@ -84,12 +84,20 @@ header ul > li {
   display: inline-block;
   width:15%;
 }
-
+.header-middle-prof > ul> li{
+  display: inline-block;
+  width:12%;
+}
 header ul > li > img{
   width:100%;
   max-width:90px;
 }
-.header-middle{
+.header-middle, .header-middle-prof{
+  width:100%;
+  background: #333 none repeat scroll 0 0;
+  font-family: sans-serif;
+}
+.header-middle-prof{
   width:100%;
   background: #333 none repeat scroll 0 0;
   font-family: sans-serif;

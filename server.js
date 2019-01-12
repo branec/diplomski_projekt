@@ -99,7 +99,7 @@ app.route('/login')
         res.redirect('/login');
     }
 });
-
+/*ovo treba prilagoditi, napravila sam samo da mogu pregledavat stranicu*/
 app.get('/uvid', (req, res) => {
     if (req.session.user && req.cookies.user_sid) {
         res.sendFile(__dirname + '/public/uvid.html');
@@ -108,6 +108,21 @@ app.get('/uvid', (req, res) => {
     }
 });
 
+<<<<<<< HEAD
+=======
+app.get('/prof_dash', (req, res) => {
+    if (req.session.user && req.cookies.user_sid) {
+        res.sendFile(__dirname + '/public/prof_dash.html');
+    } else {
+        res.redirect('/login');
+    }
+});
+/*kraj*/
+
+  
+
+  /* sandrina brljotina */
+>>>>>>> adbbaffb5d3e56c1b452e832f6ee9c24ace9b12e
   app.get('/studenti', (req, res) => {
         global.sql.connect(global.sqlConfig, function() {
             var request = new sql.Request();
