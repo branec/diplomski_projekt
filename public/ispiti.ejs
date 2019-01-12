@@ -55,20 +55,23 @@
         <h2>Popis svih ispita:</h2>
         <table class="table">
             <th></th>
-            <th>Naziv</th>
             <th>Predmet</th>
-            <th>Vrijeme predaje</th>
-            <th>Status ispravljanja</th>
-            <th>Bodovi</th>
+            <th>Naziv</th>
+            <th>Vrijeme pocetka</th>
+            <th>Vrijeme zavrsetka</th>
+            <th>Prostorija</th>
+            <th>Trajanje</th>
             <th></th>
 
-            <% for (i=0; i<20; i++){%>
+            <% for (i=0; i<ispiti.length; i++){%>
                 <tr>
                     <td style="text-align:right;padding-right:3%;"><b><%= (i+1) %>.</b> </td>
-                    <td>1. Kolokvij</td>
-                    <td>Računalna forenzika</td>
-                    <td>28.10.2018. 10:00h</td>
-                    <td>Ispravljanje u tijeku</td>
+                    <td><%= ispiti[i].Naziv[1] %></td>
+                    <td><%= ispiti[i].Naziv[0] %></td>
+                    <td><%= ispiti[i].VrijemeOd.toString().split(" ").slice(0, 4).join(" ") %></td>
+                    <td><%= ispiti[i].VrijemeDo.toString().split(" ").slice(0, 4).join(" ") %></td>
+                    <td><%= ispiti[i].Prostorija %></td>
+                    <td><%= ispiti[i].Trajanje %> minuta</td>
                     <td class=>/</td>
                     <td><a style="color:blue;" href="/uvid">Uvid</a></td>
                 </tr>
@@ -171,6 +174,10 @@ function Draw(){
         $("#wrapper").toggleClass("toggled");
         $("#menu-toggle").addClass("opened-hamburger");
     });
+
+    $.ajax({
+        url: "/exams"
+    }).then(console.log)
     </script>
 
 </body>

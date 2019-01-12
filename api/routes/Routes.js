@@ -18,13 +18,13 @@ module.exports = function(app) {
 
 
     app.route('/delUser')
-    .delete(users.delete_user);
+    .post(users.delete_user);
 
     app.route('/login')
     .post(users.login);
 
-    app.route('/newUser')
-    .post(users.new_user);
+    // app.route('/newUser')
+    // .post(users.new_user);
 
     app.route('/subjects/:user')
     .get(subjects.get_subjects);

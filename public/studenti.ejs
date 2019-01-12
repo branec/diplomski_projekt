@@ -76,7 +76,7 @@
                     <td><%= students[i].JMBAG %></td>
                     <td>
                         <form method="POST" action="/delUser">
-                            <input type="hidden" name="id" value="<% students[i].id %>" />
+                            <input type="hidden" name="id" value="<%= students[i].Id %>" />
                             <button type="submit">Delete</button>
                     </form>
                     </td>

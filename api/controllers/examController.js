@@ -97,7 +97,7 @@ exports.get_exams_for_subject = function (req, res) {
     global.sql.connect(global.sqlConfig, function() {
         var request = new sql.Request();
         request.query(`SELECT * FROM Ispit WHERE Ispit.PredmetId = ${req.params.subjects}`, function(err, recordset) {
-        if (err)
+            if (err)
           res.send(err);
 
           res.json(recordset.recordsets);

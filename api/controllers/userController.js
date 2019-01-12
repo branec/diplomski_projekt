@@ -232,6 +232,7 @@ exports.update_user = function (req, res) {
  */
 
 exports.new_user = function (req, res) {
+  console.log("szovem 222")
   global.sql.connect(global.sqlConfig, function() {
     var request = new sql.Request();
 
@@ -244,10 +245,12 @@ exports.new_user = function (req, res) {
     var type = req.body.TipId;
     var id = req.body.Id;
     var query = `INSERT INTO (KorisnickoIme,Ime,JMBAG,Prezime,Datum,Lozinka,TipId) Korisnik Values (${username},${name},${jmbag},${surname},${date},${password},${type})` ;
- 
+    console.log("szovem 1")
     request.query(query, function(err, recordset) {
-          if (err)
-          res.send(err);
+          if (err) {
+            res.send(err);
+            return
+          }
 
           if(recordset.rowsAffected.length === 1){
             res.json({odgovor:"true"})
@@ -296,16 +299,16 @@ exports.new_user = function (req, res) {
 exports.delete_user = function (req, res) {
     global.sql.connect(global.sqlConfig, function() {
       var request = new sql.Request();
-    
-      var username = req.body.KorisnickoIme; 
-      var password = req.body.Lozinka;
-      var query = 'DELETE FROM Korisnik WHERE Id = ' + req.body.Id;
+
+      var query = 'DELETE FROM Korisnik WHERE Id = ' + req.body.id;
       request.query(query, function(err, recordset) {
-          if (err)
-          res.send(err);
+          if (err) {
+            res.send(err);
+            return
+          }
 
           if(recordset.rowsAffected.length === 1){
-            res.json({odgovor:"true"})
+            res.redirect("/studenti")
           }else{
             res.json({odgovor:"false"})
           }

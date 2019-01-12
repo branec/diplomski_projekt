@@ -24,9 +24,12 @@ body#LoginForm{ background-image:url("https://hdwallsource.com/img/2014/9/blur-2
   padding: 50px 70px 70px 71px;
 }
 a {
-  color:white;
+  /* color:white; NOTE!!! DO NOT set color on all links on page to white! */ 
 }
-a:hover{
+header a {
+  color: white;
+}
+header a:hover{
   color:white;
 }
 .login-form .form-group {
