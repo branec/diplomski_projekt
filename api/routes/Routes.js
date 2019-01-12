@@ -36,7 +36,7 @@ module.exports = function(app) {
     .put(subjects.update_subject);
 
     app.route('/subject/deleteSubject')
-    .delete(subjects.delete_subject);
+    .post(subjects.delete_subject);
 
     app.route('/exams')
     .get(exams.get_exams);

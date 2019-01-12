@@ -1,0 +1,33 @@
+<html>
+    <head>
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+            <link rel="stylesheet" type="text/css" href="/scripts/styles.css">    
+    </head>
+    <body id="noviPredmet">
+        <div class="container">
+        <div class="login-form">
+        <div class="main-div">
+            <div class="panel">
+           <h2>Prijava</h2>
+           <p>Molimo unesite novi predmet</p>
+           </div>
+            <form id="newPredmet" method="POST" action="/subjects/newSubject">
+                
+                    <input type="text" id="Naziv" name="Naziv" placeholder="Naziv">
+
+                    <input type="text" id="ZavodId" name="ZavodId" placeholder="ZavodId">
+        
+                    <input type="text" id="KorisnikId" name="KorisnikId" placeholder="KorisnikId">
+                
+                <button type="submit" class="btn btn-primary">Prijava</button>
+        
+            </form>
+            </div>
+        </div></div></div>
+        
+        
+        </body>
+
+</html>

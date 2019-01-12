@@ -138,8 +138,10 @@ app.get('/prof_dash', (req, res) => {
             var request = new sql.Request();
             var query = 'select * from PREDMET, ZAVOD where Predmet.ZavodID=ZAVOD.Id';
             request.query(query, function(err, recordset) {
-                if (err)
+                if (err){
                 res.send(err);
+                sql.close();
+            }
                 var predmet = (recordset.recordset);
                 sql.close();
                 console.log(predmet);
@@ -210,8 +212,10 @@ app.get('/newUser', (req, res) => {
         });
     }); 
   
-/* kraj sandrine brljotine */
  
+app.get('/subjects/newSubject', (req, res) => {
+    res.render('noviPredmet');
+});
 
 app.get('/logout', (req, res) => {
   if (req.session.user && req.cookies.user_sid) {
