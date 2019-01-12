@@ -1,5 +1,37 @@
 'use strict';
 
+/**
+ * 
+ * @api {get} /sheets Get all sheets.
+ * @apiName getSheets
+ * @apiGroup Sheets
+ * @apiVersion  1.0.0
+ * 
+ * 
+ * @apiSuccess (200) {Number} ID Picture unique ID.
+ * @apiSuccess (200) {String} QrKod Foreign Id of sheet.
+ * @apiSuccess (200) {Number} IspitId Foreign Id of user.
+ * @apiSuccess (200) {Number} BrojBodova Picture data.
+ * @apiSuccess (200) {Number} KorisnikId Picture name.
+ * @apiSuccess (200) {Number} StatusKosuljice Picture name.
+ * 
+ * 
+ * 
+ * @apiSuccessExample {json} Success-Response:
+ * {
+ *     HTTP/1.1 200 OK
+ *     {
+ *       "Id" : 1,
+ *       "QrKod" : "kod",
+ *       "IspitId" : 1,
+ *       "BrojBodova" : 2,
+ *       "KorisnikId" : "2",
+ *       "StatusKosuljice" : "1"
+ *     }
+ * }
+ * 
+ * 
+ */
 
 exports.get_all_sheets = function (req, res) {
       global.sql.connect(global.sqlConfig, function() {
@@ -13,6 +45,43 @@ exports.get_all_sheets = function (req, res) {
         });
     });
 }
+/**
+ * 
+ * @api {get} /sheets/:users Get all sheets by user.
+ * @apiName getSheetByUser
+ * @apiGroup Sheets
+ * @apiVersion  1.0.0
+ * 
+ * @apiParam  {Number} KorisnikId  Foreign Id of user.
+ * 
+ * @apiSuccess (200) {Number} ID Picture unique ID.
+ * @apiSuccess (200) {String} QrKod Foreign Id of sheet.
+ * @apiSuccess (200) {Number} IspitId Foreign Id of user.
+ * @apiSuccess (200) {Number} BrojBodova Picture data.
+ * @apiSuccess (200) {Number} KorisnikId Picture name.
+ * @apiSuccess (200) {Number} StatusKosuljice Picture name.
+ * 
+ * 
+ * @apiParamExample  {json} Request-Example:
+ * {
+ *     KorisnikId : 1
+ * }
+ * 
+ * @apiSuccessExample {json} Success-Response:
+ * {
+ *     HTTP/1.1 200 OK
+ *     {
+ *       "Id" : 1,
+ *       "QrKod" : "kod",
+ *       "IspitId" : 1,
+ *       "BrojBodova" : 2,
+ *       "KorisnikId" : "2",
+ *       "StatusKosuljice" : "1"
+ *     }
+ * }
+ * 
+ * 
+ */
 
 exports.get_sheet_by_user = function (req, res) {
     global.sql.connect(global.sqlConfig, function() {
@@ -27,6 +96,44 @@ exports.get_sheet_by_user = function (req, res) {
   });
 }
 
+/**
+ * 
+ * @api {get} /sheets/:exams Get all sheets by exam.
+ * @apiName getSheetByExam
+ * @apiGroup Sheets
+ * @apiVersion  1.0.0
+ * 
+ * @apiParam  {Number} IspitId  Foreign Id of exam.
+ * 
+ * @apiSuccess (200) {Number} ID Picture unique ID.
+ * @apiSuccess (200) {String} QrKod Foreign Id of sheet.
+ * @apiSuccess (200) {Number} IspitId Foreign Id of user.
+ * @apiSuccess (200) {Number} BrojBodova Picture data.
+ * @apiSuccess (200) {Number} KorisnikId Picture name.
+ * @apiSuccess (200) {Number} StatusKosuljice Picture name.
+ * 
+ * 
+ * @apiParamExample  {json} Request-Example:
+ * {
+ *     IspitId : 1
+ * }
+ * 
+ * @apiSuccessExample {json} Success-Response:
+ * {
+ *     HTTP/1.1 200 OK
+ *     {
+ *       "Id" : 1,
+ *       "QrKod" : "kod",
+ *       "IspitId" : 1,
+ *       "BrojBodova" : 2,
+ *       "KorisnikId" : "2",
+ *       "StatusKosuljice" : "1"
+ *     }
+ * }
+ * 
+ * 
+ */
+
 exports.get_sheet_by_exam = function (req, res) {
     global.sql.connect(global.sqlConfig, function() {
       var request = new sql.Request();
@@ -39,6 +146,45 @@ exports.get_sheet_by_exam = function (req, res) {
       });
   });
 }
+
+/**
+ * 
+ * @api {post} /sheets/newSheet Creates new sheet.
+ * @apiName newSheet
+ * @apiGroup Sheets
+ * @apiVersion  1.0.0
+ * 
+ * @apiParam  {String} QrKod Foreign Id of sheet.
+ * @apiParam  {Number} IspitId Foreign Id of user.
+ * @apiParam  {Number} BrojBodova Picture data.
+ * @apiParam  {Number} KorisnikId Picture name.
+ * @apiParam  {Number} StatusKosuljice Picture name.
+ * 
+ * 
+ * @apiSuccess (201) {Number} ID Picture unique ID.
+ * @apiSuccess (201) {String} QrKod Foreign Id of sheet.
+ * @apiSuccess (201) {Number} IspitId Foreign Id of user.
+ * @apiSuccess (201) {Number} BrojBodova Picture data.
+ * @apiSuccess (201) {Number} KorisnikId Picture name.
+ * @apiSuccess (201) {Number} StatusKosuljice Picture name.
+ * 
+ * 
+ * @apiParamExample  {json} Request-Example:
+ * {
+ *     "QrKod" : "kod",
+ *     IspitId : 1,
+ *     BrojBodova : 2,
+ *     KorisnikId : 2,
+ *     StatusKosuljice : 1
+ * }
+ * 
+ * @apiSuccessExample {json} Success-Response:
+ * {
+ *     HTTP/1.1 201 Created
+ * }
+ * 
+ * 
+ */
 
 exports.new_sheet = function (req, res) {
     global.sql.connect(global.sqlConfig, function() {
@@ -65,6 +211,53 @@ exports.new_sheet = function (req, res) {
     });
 }
 
+/**
+ * 
+ * @api {post} /sheets/updateSheet Updates existing sheet.
+ * @apiName updateSheet
+ * @apiGroup Sheets
+ * @apiVersion  1.0.0
+ * 
+ * @apiParam  {String} QrKod Foreign Id of sheet.
+ * @apiParam  {Number} IspitId Foreign Id of user.
+ * @apiParam  {Number} BrojBodova Picture data.
+ * @apiParam  {Number} KorisnikId Picture name.
+ * @apiParam  {Number} StatusKosuljice Picture name.
+ * 
+ * 
+ * @apiSuccess (200) {Number} ID Picture unique ID.
+ * @apiSuccess (200) {String} QrKod Foreign Id of sheet.
+ * @apiSuccess (200) {Number} IspitId Foreign Id of user.
+ * @apiSuccess (200) {Number} BrojBodova Picture data.
+ * @apiSuccess (200) {Number} KorisnikId Picture name.
+ * @apiSuccess (200) {Number} StatusKosuljice Picture name.
+ * 
+ * 
+ * @apiParamExample  {json} Request-Example:
+ * {
+ *     "QrKod" : "kod",
+ *     IspitId : 1,
+ *     BrojBodova : 2,
+ *     KorisnikId : 2,
+ *     StatusKosuljice : 1
+ * }
+ * 
+ * @apiSuccessExample {json} Success-Response:
+ * {
+ *     HTTP/1.1 200 OK
+ *     {
+ *       "Id" : 1,
+ *       "QrKod" : "kod",
+ *       "IspitId" : 1,
+ *       "BrojBodova" : 2,
+ *       "KorisnikId" : "2",
+ *       "StatusKosuljice" : "1"
+ *     }
+ * }
+ * 
+ * 
+ */
+
 exports.update_sheet = function (req, res) {
     global.sql.connect(global.sqlConfig, function() {
         var request = new sql.Request();
@@ -90,6 +283,37 @@ exports.update_sheet = function (req, res) {
         });
     });
 }
+
+/**
+ * 
+ * @api {post} /sheets/deleteSheet Deletes existing sheet.
+ * @apiName deleteSheet
+ * @apiGroup Sheets
+ * @apiVersion  1.0.0
+ * 
+ * @apiParam  {Number} Id Picture unique ID.
+ * 
+ * 
+ * @apiSuccess (200) {Number} ID Picture unique ID.
+ * @apiSuccess (200) {String} QrKod Foreign Id of sheet.
+ * @apiSuccess (200) {Number} IspitId Foreign Id of user.
+ * @apiSuccess (200) {Number} BrojBodova Picture data.
+ * @apiSuccess (200) {Number} KorisnikId Picture name.
+ * @apiSuccess (200) {Number} StatusKosuljice Picture name.
+ * 
+ * 
+ * @apiParamExample  {json} Request-Example:
+ * {
+ *     Id : 1
+ * }
+ * 
+ * @apiSuccessExample {json} Success-Response:
+ * {
+ *     HTTP/1.1 200 OK
+ * }
+ * 
+ * 
+ */
 
 exports.delete_sheet = function (req, res) {
     global.sql.connect(global.sqlConfig, function() {

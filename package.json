@@ -13,6 +13,7 @@
     "nodemon": "^1.18.7"
   },
   "dependencies": {
+    "apidoc": "^0.17.7",
     "cookie-parser": "^1.4.3",
     "express": "^4.16.4",
     "express-session": "^1.15.6",
