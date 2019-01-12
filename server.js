@@ -99,7 +99,7 @@ app.route('/login')
         res.redirect('/login');
     }
 });
-
+/*ovo treba prilagoditi, napravila sam samo da mogu pregledavat stranicu*/
 app.get('/uvid', (req, res) => {
     if (req.session.user && req.cookies.user_sid) {
         res.sendFile(__dirname + '/public/uvid.html');
@@ -107,6 +107,15 @@ app.get('/uvid', (req, res) => {
         res.redirect('/login');
     }
 });
+
+app.get('/prof_dash', (req, res) => {
+    if (req.session.user && req.cookies.user_sid) {
+        res.sendFile(__dirname + '/public/prof_dash.html');
+    } else {
+        res.redirect('/login');
+    }
+});
+/*kraj*/
 
   
 
