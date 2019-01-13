@@ -60,6 +60,7 @@
 
     </div>
     <div class="table-content">
+            <a href="/subjects/newSubject" >Dodaj novi predmet</a>
         <h2>Popis svih predmeta:</h2>
         <table class="table">
             <th></th>
@@ -71,6 +72,12 @@
                     <td><%= i+1 %>.</td>
                     <td><%= predmeti[i].Naziv[0] %></td>
                     <td><%= predmeti[i].Naziv[1] %></td>
+                    <td>
+                        <form method="POST" action="/subject/deleteSubject">
+                            <input type="hidden" name="id" value="<%= predmeti[i].Id[0] %>" />
+                            <button type="submit">Delete</button>
+                        </form>
+                    </td>
                 </tr>
             <% } %>
         </table>

@@ -1,5 +1,34 @@
 'use strict';
 
+/**
+ * 
+ * @api {get} /subjects/:user Get all subjects by user.
+ * @apiName getSubjects
+ * @apiGroup Subjects
+ * @apiVersion  1.0.0
+ * 
+ * 
+ * @apiSuccess (200) {Number} ID Subject unique ID.
+ * @apiSuccess (200) {String} Naziv Subject name.
+ * @apiSuccess (200) {Number} ZavodId Foreign Id of department.
+ * @apiSuccess (200) {Number} KorisnikId Foreign Id of user.
+ * 
+ * 
+ * 
+ * @apiSuccessExample {json} Success-Response:
+ * {
+ *     HTTP/1.1 200 OK
+ *     {
+ *       "Id" : 1,
+ *       "Naziv" : "Math",
+ *       "ZavodId" : 1,
+ *       "KorisnikId" : 2
+ *     }
+ * }
+ * 
+ * 
+ */
+
 exports.get_subjects = function (req, res) {
     global.sql.connect(global.sqlConfig, function() {
       var request = new sql.Request();
@@ -13,6 +42,39 @@ exports.get_subjects = function (req, res) {
   });
 }
 
+/**
+ * 
+ * @api {post} /subjects/newSubject Creates new subject.
+ * @apiName newSubject
+ * @apiGroup Subjects
+ * @apiVersion  1.0.0
+ * 
+ * @apiParam  {String} Naziv Subject name.
+ * @apiParam  {Number} ZavodId Foreign Id of department.
+ * @apiParam  {Number} KorisnikId foreign id of user.
+ * 
+ * 
+ * @apiSuccess (201) {Number} ID Subject unique ID.
+ * @apiSuccess (201) {String} Naziv Subject name.
+ * @apiSuccess (201) {Number} ZavodId Foreign Id of department.
+ * @apiSuccess (201) {Number} KorisnikId Foreign Id of user.
+ * 
+ * 
+ * @apiParamExample  {json} Request-Example:
+ * {
+ *       "Naziv" : "Math",
+ *       "ZavodId" : 1,
+ *       "KorisnikId" : 2
+ * }
+ * 
+ * @apiSuccessExample {json} Success-Response:
+ * {
+ *     HTTP/1.1 201 Created
+ * }
+ * 
+ * 
+ */
+
 exports.new_subject = function (req, res) {
     global.sql.connect(global.sqlConfig, function() {
         var request = new sql.Request();
@@ -20,21 +82,75 @@ exports.new_subject = function (req, res) {
         var name = req.body.Naziv;
         var departmentId = req.body.ZavodId;
         var userId = req.body.KorisnikId;
-        var query=`INSERT INTO Predmet (Naziv,ZavodId,KorisnikId) VALUES (${name},${departmentId},${userId})`;
-        request.query(query,function(err, recordset) {
-            if(err)
-            res.send(err);
 
-            if(recordset.recordset[0].postoji === 1){
-                res.send(200)
-            }else{
-                res.json({odgovor:"false"})
+        let canUpdate = true
+          Object.keys(req.body).forEach(row => {
+            if(req.body[row] === "") {
+                res.status(400)
+                res.send(row + " is missing")
+                sql.close();
+                canUpdate = false
             }
+            })
+            if(!canUpdate) return
 
+        var query=`INSERT INTO Predmet (Naziv,ZavodId,KorisnikId) values ('${name}','${departmentId}','${userId}')`;
+        console.log("szovem 1")
+        request.query(query, function(err, recordset) {
+            if (err) {
+              res.send(err);
+              return
+            }
+  
+            if(recordset.rowsAffected.length === 1){
+              res.redirect("/predmeti")
+            }else{
+              res.json({odgovor:"false"})
+            }
+  
             sql.close();
         });
     });
 }
+
+/**
+ * 
+ * @api {put} /subject/updateSubject Updates existing subject.
+ * @apiName updateSubject
+ * @apiGroup Subjects
+ * @apiVersion  1.0.0
+ * 
+ * @apiParam  {String} Naziv Subject name.
+ * @apiParam  {Number} ZavodId Foreign Id of department.
+ * @apiParam  {Number} KorisnikId foreign id of user.
+ * 
+ * 
+ * @apiSuccess (200) {Number} ID Subject unique ID.
+ * @apiSuccess (200) {String} Naziv Subject name.
+ * @apiSuccess (200) {Number} ZavodId Foreign Id of department.
+ * @apiSuccess (200) {Number} KorisnikId Foreign Id of user.
+ * 
+ * 
+ * @apiParamExample  {json} Request-Example:
+ * {
+ *       "Naziv" : "Math",
+ *       "ZavodId" : 1,
+ *       "KorisnikId" : 2
+ * }
+ * 
+ * @apiSuccessExample {json} Success-Response:
+ * {
+ *     HTTP/1.1 200 OK
+ *      {
+ *          "Id" : 1,
+ *          "Naziv" : "Math",
+ *          "ZavodId" : 1,
+ *          "KorisnikId" : 2
+ *      }
+ * }
+ * 
+ * 
+ */
 
 exports.update_subject = function (req, res) {
     global.sql.connect(global.sqlConfig, function() {
@@ -60,21 +176,51 @@ exports.update_subject = function (req, res) {
     });
 }
 
+/**
+ * 
+ * @api {delete} /subject/deleteSubject Deletes existing subject.
+ * @apiName deleteSubject
+ * @apiGroup Subject
+ * @apiVersion  1.0.0
+ * 
+ * @apiParam  {Number} Id Subject unique ID.
+ * 
+ * 
+ * @apiSuccess (200) {Number} ID Subject unique ID.
+ * @apiSuccess (200) {String} Naziv Subject name.
+ * @apiSuccess (200) {Number} ZavodId Foreign Id of department.
+ * @apiSuccess (200) {Number} KorisnikId Foreign Id of user.
+ * 
+ * 
+ * @apiParamExample  {json} Request-Example:
+ * {
+ *     Id : 1
+ * }
+ * 
+ * @apiSuccessExample {json} Success-Response:
+ * {
+ *     HTTP/1.1 200 OK
+ * }
+ * 
+ * 
+ */
+
 exports.delete_subject = function (req, res) {
     global.sql.connect(global.sqlConfig, function() {
         var request = new sql.Request();
-
-        var id = req.body.Id;
-        var query=`DELETE FROM Korisnik WHERE Id=\'${id}\'`;
+        console.log(req.body);
+        var query='DELETE FROM Predmet WHERE Id=' + req.body.id;
         request.query(query,function(err, recordset) {
-            if(err)
+            if (err) {
             res.send(err);
+            return
+          }
 
-            if(recordset.recordset[0].postoji === 1){
-                res.send(200)
-            }else{
-                res.json({odgovor:"false"})
-            }
+          if(recordset.rowsAffected.length === 1){
+            res.redirect("/predmeti")
+          }else{
+            res.json({odgovor:"false"})
+          }
 
             sql.close();
         });

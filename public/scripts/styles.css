@@ -24,9 +24,12 @@ body#LoginForm{ background-image:url("https://hdwallsource.com/img/2014/9/blur-2
   padding: 50px 70px 70px 71px;
 }
 a {
-  color:white;
+  /* color:white; NOTE!!! DO NOT set color on all links on page to white! */ 
 }
-a:hover{
+header a {
+  color: white;
+}
+header a:hover{
   color:white;
 }
 .login-form .form-group {
@@ -81,12 +84,20 @@ header ul > li {
   display: inline-block;
   width:15%;
 }
-
+.header-middle-prof > ul> li{
+  display: inline-block;
+  width:12%;
+}
 header ul > li > img{
   width:100%;
   max-width:90px;
 }
-.header-middle{
+.header-middle, .header-middle-prof{
+  width:100%;
+  background: #333 none repeat scroll 0 0;
+  font-family: sans-serif;
+}
+.header-middle-prof{
   width:100%;
   background: #333 none repeat scroll 0 0;
   font-family: sans-serif;
@@ -148,6 +159,28 @@ table{
 }
 table td:not(:first-child) {
   width:22%;
+}
+.prof-activity{
+  width:100%;
+  margin-left:auto;
+  margin-right:auto;
+  margin-top:2%;
+}
+.prof-activity thead{
+  margin-left:5%;
+}
+.welcome-text{
+  width:80%;
+  margin-left:auto;
+  margin-right:auto;
+  margin-top:5%;
+}
+.prof-activity td{
+  width:15%;
+}
+.center-activity{
+  text-align:center;
+  margin-top:10%;
 }
 th{
   letter-spacing: 1px;

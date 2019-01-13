@@ -38,6 +38,7 @@ app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 
 app.use(express.static(__dirname + '/public'));
+app.use("/apidoc", express.static(__dirname + '/apidoc'))
 
 app.use((req, res, next) => {
   if (req.cookies.user_sid && !req.session.user) {
@@ -101,7 +102,7 @@ app.route('/login')
         res.redirect('/login');
     }
 });
-
+/*ovo treba prilagoditi, napravila sam samo da mogu pregledavat stranicu*/
 app.get('/uvid', (req, res) => {
     if (req.session.user && req.cookies.user_sid) {
         res.sendFile(__dirname + '/public/uvid.html');
@@ -109,6 +110,15 @@ app.get('/uvid', (req, res) => {
         res.redirect('/login');
     }
 });
+
+app.get('/prof_dash', (req, res) => {
+    if (req.session.user && req.cookies.user_sid) {
+        res.sendFile(__dirname + '/public/prof_dash.html');
+    } else {
+        res.redirect('/login');
+    }
+});
+/*kraj*/
 
   
 
@@ -131,8 +141,10 @@ app.get('/uvid', (req, res) => {
             var request = new sql.Request();
             var query = 'select * from PREDMET, ZAVOD where Predmet.ZavodID=ZAVOD.Id';
             request.query(query, function(err, recordset) {
-                if (err)
+                if (err){
                 res.send(err);
+                sql.close();
+            }
                 var predmet = (recordset.recordset);
                 sql.close();
                 console.log(predmet);
@@ -143,11 +155,13 @@ app.get('/uvid', (req, res) => {
     app.get('/ispiti', (req, res) => {
         global.sql.connect(global.sqlConfig, function() {
             var request = new sql.Request();
-            var query = 'select * from ISPIT';
+            var query = 'select * from ISPIT JOIN PREDMET on PREDMET.Id = ISPIT.PredmetId ';
+            
             request.query(query, function(err, recordset) {
                 if (err)
                 res.send(err);
                 var ispit = (recordset.recordset);
+                
                 sql.close();
                 console.log(ispit);
                 res.render('ispiti', {ispiti:ispit});
@@ -170,14 +184,28 @@ app.get('/newUser', (req, res) => {
           var date = req.body.Datum;
           var type = req.body.TipId;
           var id = req.body.Id;
-          var query = `INSERT INTO (KorisnickoIme,Ime,JMBAG,Prezime,Datum,Lozinka,TipId) Korisnik Values (${username},${name},${jmbag},${surname},${date},${password},${type})` ;
+          let canUpdate = true
+          Object.keys(req.body).forEach(row => {
+            if(req.body[row] === "") {
+                res.status(400)
+                res.send(row + " is missing")
+                canUpdate = false
+            }
+            })
+            if(!canUpdate) return
+
+          var query = `INSERT INTO Korisnik (KorisnickoIme,Ime,JMBAG,Prezime,Lozinka,TipId) values ('${username}','${name}','${jmbag}','${surname}','${password}','${type}')` ;
+          console.log(req.body, query)
        
           request.query(query, function(err, recordset) {
-                if (err)
-                res.send(err);
-      
+                if (err) {
+                    res.send(err);
+                    sql.close()
+                    return
+                  }
+    
                 if(recordset.rowsAffected.length === 1){
-                  res.json({odgovor:"true"})
+                  res.redirect("/studenti")
                 }else{
                   res.json({odgovor:"false"})
                 }
@@ -187,8 +215,10 @@ app.get('/newUser', (req, res) => {
         });
     }); 
   
-/* kraj sandrine brljotine */
  
+app.get('/subjects/newSubject', (req, res) => {
+    res.render('noviPredmet');
+});
 
 app.get('/logout', (req, res) => {
   if (req.session.user && req.cookies.user_sid) {

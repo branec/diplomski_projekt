@@ -1,0 +1,9 @@
+{
+    "name": "diplomski projekt",
+    "version": "0.1.0",
+    "description": "apiDoc for diplomski projekt",
+    "title": "apiDoc",
+    "template" : {
+        "forceLanguage" : "en"
+    }
+  }
