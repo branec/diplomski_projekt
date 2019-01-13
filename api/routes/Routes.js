@@ -50,6 +50,9 @@ module.exports = function(app) {
     app.route('/exams/deleteExam')
     .post(exams.delete_exam);
 
+    app.route('/exams_user/:username')
+    .get(exams.get_exams_per_user);
+
     app.route('/department/:ID')
     .get(departments.get_department);
 

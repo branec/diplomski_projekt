@@ -216,3 +216,32 @@ th{
   }
   
 }*/
+
+
+#canvas-images{
+color: #777777;
+border: 1px solid #ced4da;
+padding: 5px;
+margin-bottom: 5px;
+border-radius: .25rem;
+
+}
+
+#getdata {
+margin-bottom: 5px;
+width: 640px;
+
+}
+
+#send-image {
+  margin-bottom: 5px;
+  margin-top: 5px;
+width: 640px;
+
+}
+
+
+#canvas-images > canvas{
+  height: 50px;
+  margin: 5px;
+}

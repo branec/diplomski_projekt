@@ -3,6 +3,8 @@ var express = require('express'),
   app = express(),
   port = process.env.PORT || 3000,
   bodyParser = require('body-parser');
+  const multer = require("multer");
+  const fs = require("fs");
 
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
@@ -31,8 +33,9 @@ global.sqlConfig = {
     server: '161.53.18.102',
     database: 'DPVM'
 }
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 
 app.use(express.static(__dirname + '/public'));
 
@@ -195,6 +198,105 @@ app.get('/logout', (req, res) => {
       res.redirect('/login');
   }
 });
+
+/*handling pictures*/
+const upload = multer({
+    dest: "./temp",
+    limits: { fieldSize: 25 * 1024 * 1024 }
+  });
+  
+  
+  const handleError = (err, res) => {
+    res
+      .status(500)
+      .contentType("text/plain")
+      .end("Oops! Something went wrong!");
+  };
+
+app.post(
+    "/uploadfile",
+    upload.single("file" /* name attribute of <file> element in your form */),
+    (req, res) => {
+
+        var user = req.query.user;
+        var ispit = req.query.exam;
+        var sheet = req.query.sheet;
+        var rbr = req.query.rbr;
+        var urlSlika =  "./uploaded/" + ispit + "/" + user + req.query.rbr +".png";
+
+        var dir = './uploaded/' + ispit;
+
+            if (!fs.existsSync(dir)){
+                    fs.mkdirSync(dir);
+            }
+
+
+      const tempPath = req.file.path;
+      const targetPath = path.join(__dirname, urlSlika);
+  
+      if (path.extname(req.file.originalname).toLowerCase() === "") {
+        fs.rename(tempPath, targetPath, err => {
+          if (err) return handleError(err, res);
+
+          global.sql.connect(global.sqlConfig).then(pool => {
+            return pool.request()
+            .query(`select id from KOSULJICA WHERE Qrkod ='${sheet}' `)
+        }).then(result => {
+            console.dir(result)
+                if(result.recordset.length > 0){
+                    global.sheetId = result.recordset[0].id;
+                }else{
+                    global.sheetId = -1
+                }
+                global.sql.close();
+            return global.sql.connect(global.sqlConfig)
+           
+        }).then(pool => {
+            return pool.request()
+            .query(`select id from Korisnik WHERE KorisnickoIme ='${user}' `)
+        }).then(result => {
+            console.dir(result)
+            if(result.recordset.length > 0){
+                global.userId = result.recordset[0].id;
+            }else{
+                global.userId = -1
+            }
+            global.sql.close();
+        return global.sql.connect(global.sqlConfig)
+        }).then(pool => {
+
+            if(global.sheetId === -1){
+                return pool.request()
+                .query(`INSERT INTO Kosuljica (Qrkod,IspitID,KorisnikId,StatusKosuljice) VALUES ('${sheet}',${ispit},${global.userId},1); INSERT INTO Slika (KosuljicaId,KorisnikId,Url) VALUES (SCOPE_IDENTITY(),${global.userId},'${urlSlika}');`)
+            }else{
+                return pool.request()
+                .query(`INSERT INTO Slika (KosuljicaId,KorisnikId,Url) VALUES (${global.sheetId},${global.userId},'${urlSlika}');`)
+            }
+            
+        }).then(result => {
+            console.dir(result)
+        }).catch(err => {
+            var rror = err;
+            global.sql.close();
+        })
+
+          res
+            .status(200)
+            .contentType("text/plain")
+            .end("File uploaded!");
+        });
+      } else {
+        fs.unlink(tempPath, err => {
+          if (err) return handleError(err, res);
+  
+          res
+            .status(403)
+            .contentType("text/plain")
+            .end("Only .png files are allowed!");
+        });
+      }
+    }
+  );
 
 var routes = require('./api/routes/Routes');
 routes(app);

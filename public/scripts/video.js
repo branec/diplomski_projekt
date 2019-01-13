@@ -7,6 +7,7 @@ var videoSelect = document.querySelector('select#videoSource');
 var videoOption = document.getElementById('videoOption');
 var buttonGo = document.getElementById('go');
 var barcode_result = document.getElementById('dbr');
+var imageList= new Array;
 
 var isPaused = false;
 var videoWidth = 640,
@@ -204,3 +205,80 @@ function gotStream(stream) {
 function handleError(error) {
   console.log('Error: ', error);
 }
+
+$('#getdata').click(function(){
+  var vid = document.getElementById("video");
+  var barcodeCanvas = document.createElement("canvas");
+  barcodeCanvas.width = vid.videoWidth;
+  barcodeCanvas.height = vid.videoHeight;
+  var barcodeContext = barcodeCanvas.getContext('2d');
+  var imageWidth = vid.videoWidth, imageHeight = vid.videoHeight;
+  barcodeContext.drawImage(videoElement, 0, 0, imageWidth, imageHeight);
+  // read barcode
+  var imageData = barcodeContext.getImageData(0, 0, imageWidth, imageHeight);
+
+  var images = document.getElementById("canvas-images");
+  images.appendChild(barcodeCanvas);
+  imageList.push(barcodeCanvas);
+
+    });
+
+
+
+
+      $("#send-image").click(function() {
+
+        var vid = document.getElementById("video");
+        var barcodeCanvas = document.createElement("canvas");
+        barcodeCanvas.width = vid.videoWidth;
+        barcodeCanvas.height = vid.videoHeight;
+        var barcodeContext = barcodeCanvas.getContext('2d');
+        var imageWidth = vid.videoWidth, imageHeight = vid.videoHeight;
+        barcodeContext.drawImage(videoElement, 0, 0, imageWidth, imageHeight);
+        // read barcode
+        var imageData = barcodeContext.getImageData(0, 0, imageWidth, imageHeight);
+
+        var file = imageData.data;
+        var formData = new FormData();
+        formData.append('file', file);
+      
+        var societe = $("input#societe").val();
+        var message = $("textarea#message").val();
+
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const user = urlParams.get('user');
+        var exam = $( "#exams-list option:selected" ).val();
+        var kosuljica = document.getElementById("barcode-input").value;
+
+        var children =  document.getElementById("canvas-images").childNodes;
+     
+        var j;
+        for (j = 0; j < children.length; j++) { 
+
+        var blobBin = atob(children[j].toDataURL().split(',')[1]);
+        var array = [];
+        for(var i = 0; i < blobBin.length; i++) {
+            array.push(blobBin.charCodeAt(i));
+        }
+        var file=new Blob([new Uint8Array(array)], {type: 'image/png'});
+        
+        var formdata = new FormData();
+        formdata.append("file", file);
+        $.ajax({
+           url: "http://localhost:3000/uploadfile?user="+ user + "&exam=" + exam + "&sheet=" + kosuljica + "&rbr=" + j,
+           type: "POST",
+           data: formdata,
+           processData: false,
+           contentType: false,
+        }).done(function(respond){
+
+        });
+
+
+        }
+
+        alert("Slike uspjesno poslane!");
+        
+        
+       }); 
