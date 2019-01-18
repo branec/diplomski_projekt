@@ -141,7 +141,7 @@ app.get('/uvid/:exam', (req, res) => {
                         var Bodovi = recordset.recordsets[0];
                         var ukupno=0;
                         for(var i=0; i< Bodovi.length;i++) {
-                            ukupno+= Bodovi[i].Bodova;
+                            ukupno+= Bodovi[i].Bodovi;
                         }
                         res.render('uvid', {kosuljica: Kosuljica, slike: Slike, bodovi: Bodovi, ukupnoBodova: ukupno});
                         sql.close();
