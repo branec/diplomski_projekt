@@ -13,7 +13,8 @@
 		});
 	</script>
 </head>
-<body>
+
+<body onload='Draw()'>
         <header>
                 <div class="header-middle">
                 <ul class="header-navigation">
@@ -54,25 +55,22 @@
 <h2 style="margin-left:10%;margin-top:5%;">1. Kolokvij iz predmeta Računalna forenzika</h2>
 <div id="content">
 	<p>
-		<a rel="example_group" href="images/example.png" title="Lorem ipsum dolor sit amet"><img width="250px" alt="" src="images/example.png" /></a>
-		<a rel="example_group" href="images/example.png" title=""><img alt="" width="250px" src="images/example.png" /></a>
-		<a rel="example_group" href="images/example.png" title=""><img alt="" width="250px" src="images/example.png" /></a>
+    <% for (i=0; i < slike.length; i++) {%>
+         <a rel="example_group" href="<% slike[i].url %>" title=""><img width="250px" alt="" src="<% slike[i].url %>" /></a>
+  <% } %>
     </p>
 </div>
 <div class="exam-details">
     <div class="first-section">
-            <p>Ispravio: Vedran Mornar</p>
-            <p>Datum ispravljanja: 1.10.2018.</p>
-            <p>Dvorana: D2</p>
-            <P>Vrijeme predaje ispita: 29.09.2018.</p>
-            <p>Bodovi: 40/80</p>
-            <p>Rang: 71/150</p>
+            <p>Ispravio: <%= kosuljica.Ime + ' ' + kosuljica.Prezime %></p>
+            <p>Dvorana: <%= kosuljica.Prostorija %></p>
+            <P>Vrijeme predaje ispita: <%= kosuljica.VrijemeDo %></p>
+            <p>Bodovi: <%= ukupno %></p>
     </div>
     <div class="second-section">
-            <p>1. zadatak: 10/20 bodova</p>
-            <p>2. zadatak: 30/40 bodova</p>
-            <p>3.zadatak: 40/40 bodova</p> 
-            <p>Komentar nastavnika: Pogrešna formula u x zadatku.</p>
+        <% for (i=0; i < bodovi.length; i++) {%>
+            <p><%= bodovi[i].Zadatak %> zadatak: <%= bodovi[i].Bodovi %> bodova</p>
+        <% } %>
     </div>
    
 </div>

@@ -6,6 +6,12 @@ var express = require('express'),
   const multer = require("multer");
   const fs = require("fs");
 
+var Globals = {
+    'user': {}
+}
+
+module.exports = Globals;
+
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
 app.use(cookieParser());
@@ -69,15 +75,16 @@ app.route('/login')
 
             global.sql.connect(global.sqlConfig, function() {
               var request = new sql.Request();
-              var query = 'select COUNT(*) postoji FROM Korisnik WHERE KorisnickoIme = \'' + username + '\' AND Lozinka =\'' + password + '\'';
+              var query = 'select * FROM Korisnik WHERE KorisnickoIme = \'' + username + '\' AND Lozinka =\'' + password + '\'';
         
               request.query(query, function(err, recordset) {
                   if (err)
                   res.send(err);
         
-                  if(recordset.recordset[0].postoji === 1){
+                  if(recordset.recordset[0]){
+                    Globals.user=recordset.recordset[0];
                     req.session.user = username;
-                res.redirect('/dashboard?user=' + username);
+                    res.redirect('/dashboard?user=' + username);
                   }else{
                     res.redirect('/login');
                   }
@@ -103,12 +110,46 @@ app.route('/login')
     }
 });
 /*ovo treba prilagoditi, napravila sam samo da mogu pregledavat stranicu*/
-app.get('/uvid', (req, res) => {
-    if (req.session.user && req.cookies.user_sid) {
-        res.sendFile(__dirname + '/public/uvid.html');
-    } else {
-        res.redirect('/login');
-    }
+app.get('/uvid/:exam', (req, res) => {
+    var ispit = req.params.exam;
+    var user = Globals.user;
+    if(user === undefined || user=== null)
+      {
+          res.redirect('/login');
+          return;
+      }
+    global.sql.connect(global.sqlConfig, function() {
+        var kosuljicaRequest = new sql.Request();
+        if(user.TipId===1)
+        {
+            var Kosuljica
+            var Slike
+            kosuljicaRequest.query(`select top 1 Kosuljica.Id as KosuljicaId, Ispit.*, statusKosuljica.Naziv as statusKosuljica, statusIspit.Naziv as statusIspit, Predmet.Naziv as ImePredmeta, Korisnik.Ime, Korisnik.Prezime from Kosuljica join Ispit on Ispit.Id = Kosuljica.IspitID left join [Status] statusKosuljica on statusKosuljica.Id = Kosuljica.StatusKosuljice left join [Status] statusIspit on [statusIspit].Id = Ispit.[STATUS] join Predmet on Ispit.PredmetId = Predmet.Id join Korisnik on Predmet.KorisnikId = Korisnik.Id where Kosuljica.IspitID= ${ispit} and Kosuljica.KorisnikId=${user.Id}`, function(err, recordset) {
+                if(err)
+                    res.send(err);
+
+                Kosuljica = recordset.recordsets[0][0];
+                kosuljicaRequest.query(`select * from Slika where KosuljicaId = ${Kosuljica.KosuljicaId}`, function(err, recordset) {
+                    if(err)
+                        res.send(err);
+                    
+                    Slike= recordset.recordsets[0];
+                    kosuljicaRequest.query(`select * from Bodovi where KosuljicaId = ${Kosuljica.KosuljicaId} order by Zadatak`, function(err, recordset) {
+                        if(err)
+                            res.send(err);
+                    
+                        var Bodovi = recordset.recordsets[0];
+                        var ukupno=0;
+                        for(var i=0; i< Bodovi.length;i++) {
+                            ukupno+= Bodovi[i].Bodova;
+                        }
+                        res.render('uvid', {kosuljica: Kosuljica, slike: Slike, bodovi: Bodovi, ukupnoBodova: ukupno});
+                        sql.close();
+                });
+            });
+        });
+      }
+    });
 });
 
 app.get('/prof_dash', (req, res) => {

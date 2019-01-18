@@ -73,7 +73,7 @@
                     <td><%= ispiti[i].Prostorija %></td>
                     <td><%= ispiti[i].Trajanje %> minuta</td>
                     <td class=>/</td>
-                    <td><a style="color:blue;" href="/uvid">Uvid</a></td>
+                    <td id='<%= ispiti[i].Id[0]%>'><a style="color:blue;" href="/uvid/<%= ispiti[i].Id[0]%>">Uvid</a></td>
                 </tr>
             <% } %>
         </table>
