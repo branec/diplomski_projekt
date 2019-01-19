@@ -71,8 +71,8 @@
             <%for (i=0; i<predmeti.length; i++){%>
                 <tr>
                     <td><%= i+1 %>.</td>
-                    <td> <a href='/subjects/<%=predmeti[i].Id[0]%>'><%= predmeti[i].Naziv[0] %></td>
-                    <td> <a href='/department/<%=predmeti[i].Id[0]%>'><%= predmeti[i].Naziv[1] %></td>
+                    <td> <a href='/prof_ispiti?user=<%=korisnik.KorisnickoIme%>&exam=<%=predmeti[i].Id[0]%>'><%= predmeti[i].Naziv[0] %></td>
+                    <td> <a href='/department/<%=predmeti[i].Id[1]%>'><%= predmeti[i].Naziv[1] %></td>
                     <td>
                         <form method="POST" action="/subject/deleteSubject">
                             <input type="hidden" name="id" value="<%= predmeti[i].Id[0] %>" />

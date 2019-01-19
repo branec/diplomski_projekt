@@ -193,7 +193,7 @@ app.get('/prof_dash', (req, res) => {
                 var predmet = recordset.recordset;
                 sql.close();
                 console.log(predmet);
-                res.render('predmeti', {predmeti:predmet});
+                res.render('predmeti', {predmeti:predmet, korisnik:user});
             });
         });
     });
