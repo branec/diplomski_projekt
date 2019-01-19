@@ -322,11 +322,31 @@ exports.get_exams_per_user = function (req, res) {
     global.sql.connect(global.sqlConfig, function() {
       var request = new sql.Request();
     
-      var upit = "SELECT ispit.Id,Ispit.Naziv, Predmet.Naziv as Predmet FROM ISPIT " +
+      var upit = "SELECT ispit.Id,Ispit.Naziv,Ispit.VrijemeOd, Ispit.VrijemeDo,Ispit.Trajanje,Ispit.Prostorija,Ispit.STATUS, Predmet.Naziv as Predmet FROM ISPIT " +
       "LEFT OUTER JOIN PREDMET ON PREDMET.ID = ISPIT.PredmetId " +
       "LEFT OUTER JOIN KorisnikPredmet ON KorisnikPredmet.PredmetId = Predmet.ID " +
       "LEFT OUTER JOIN Korisnik ON Korisnik.ID = KorisnikPredmet.KorisnikId " +
       `WHERE Korisnik.KorisnickoIme = '${req.params.username}' and ISPIT.STATUS = 0`
+
+      request.query(upit , function(err, recordset) {
+          if (err)
+          res.send(err);
+    
+          res.json(recordset.recordsets[0]);
+          sql.close();
+      });
+  });}
+
+
+  exports.get_uvid_per_user = function (req, res) {
+    global.sql.connect(global.sqlConfig, function() {
+      var request = new sql.Request();
+    
+      var upit = "SELECT ispit.Id,Ispit.Naziv,Ispit.VrijemeOd, Ispit.VrijemeDo,Ispit.Trajanje,Ispit.Prostorija,Ispit.STATUS, Predmet.Naziv as Predmet FROM ISPIT " +
+      "LEFT OUTER JOIN PREDMET ON PREDMET.ID = ISPIT.PredmetId " +
+      "LEFT OUTER JOIN KorisnikPredmet ON KorisnikPredmet.PredmetId = Predmet.ID " +
+      "LEFT OUTER JOIN Korisnik ON Korisnik.ID = KorisnikPredmet.KorisnikId " +
+      `WHERE Korisnik.KorisnickoIme = '${req.params.username}'`
 
       request.query(upit , function(err, recordset) {
           if (err)

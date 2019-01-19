@@ -194,19 +194,11 @@ app.get('/prof_dash', (req, res) => {
     });
 
     app.get('/ispiti', (req, res) => {
-        global.sql.connect(global.sqlConfig, function() {
-            var request = new sql.Request();
-            var query = 'select * from ISPIT JOIN PREDMET on PREDMET.Id = ISPIT.PredmetId ';
-            
-            request.query(query, function(err, recordset) {
-                if (err)
-                res.send(err);
-                var ispit = (recordset.recordset);
-                
-                sql.close();
-                console.log(ispit);
-                res.render('ispiti', {ispiti:ispit});
-            }); });
+        if (req.session.user && req.cookies.user_sid) {
+            res.sendFile(__dirname + '/public/ispiti.html');
+        } else {
+            res.redirect('/login');
+        }           
     });
 
 app.get('/newUser', (req, res) => {

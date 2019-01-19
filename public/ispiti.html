@@ -13,15 +13,15 @@
 
 </head>
 
-<body onload='Draw()'>
+<body >
 
     <header>
         <div class="header-middle">
         <ul class="header-navigation">
             <li><img src="/images/fer_logo.PNG" /></li>
-            <li><a href="/scanner">Dodaj novi ispit</a></li>
+            <li><a id="header-scanner" >Dodaj novi ispit</a></li>
             <li>|</li>
-            <li><a href="/ispiti">Rezultati</a></li>
+            <li><a  id="header-ispiti">Pregled rezultata</a></li>
             <li>|</li>
             <li><a href="/logout">Odjava</a></li>
         </ul>
@@ -54,28 +54,22 @@
     <div class="table-content">
         <h2>Popis svih ispita:</h2>
         <table class="table">
-            <th></th>
-            <th>Predmet</th>
-            <th>Naziv</th>
-            <th>Vrijeme pocetka</th>
-            <th>Vrijeme zavrsetka</th>
-            <th>Prostorija</th>
-            <th>Trajanje</th>
-            <th></th>
+            <thead>
+                    <th></th>
+                    <th>Predmet</th>
+                    <th>Naziv</th>
+                    <th>Vrijeme pocetka</th>
+                    <th>Vrijeme zavrsetka</th>
+                    <th>Prostorija</th>
+                    <th>Trajanje</th>
+                    <th></th>
+            </thead>
+            <tbody id="ispiti-tbody">
 
-            <% for (i=0; i<ispiti.length; i++){%>
-                <tr>
-                    <td style="text-align:right;padding-right:3%;"><b><%= (i+1) %>.</b> </td>
-                    <td><%= ispiti[i].Naziv[1] %></td>
-                    <td><%= ispiti[i].Naziv[0] %></td>
-                    <td><%= ispiti[i].VrijemeOd.toString().split(" ").slice(0, 4).join(" ") %></td>
-                    <td><%= ispiti[i].VrijemeDo.toString().split(" ").slice(0, 4).join(" ") %></td>
-                    <td><%= ispiti[i].Prostorija %></td>
-                    <td><%= ispiti[i].Trajanje %> minuta</td>
-                    <td class=>/</td>
-                    <td id='<%= ispiti[i].Id[0]%>'><a style="color:blue;" href="/uvid/<%= ispiti[i].Id[0]%>">Uvid</a></td>
-                </tr>
-            <% } %>
+            
+
+            </tbody>
+           
         </table>
 
     <!--<img id ='theImg' width='500px' src="https://www.math.upenn.edu/ugrad/calc/m103/exams/103S08answersPg1.jpg" />
@@ -166,6 +160,9 @@ function Draw(){
     <!-- Bootstrap core JavaScript -->
     <script src="/scripts/vendor/jquery/jquery.min.js"></script>
     <script src="/scripts/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="scripts/headerStudent.js"></script>
+    <script src="scripts/uvid.js"></script>
+
 
     <!-- Menu Toggle Script -->
     <script>
@@ -174,10 +171,6 @@ function Draw(){
         $("#wrapper").toggleClass("toggled");
         $("#menu-toggle").addClass("opened-hamburger");
     });
-
-    $.ajax({
-        url: "/exams"
-    }).then(console.log)
     </script>
 
 </body>

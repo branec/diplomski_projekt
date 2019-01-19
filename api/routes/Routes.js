@@ -44,6 +44,12 @@ module.exports = function(app) {
     app.route('/exams/:subject')
 	  .get(exams.get_exams_for_subject);
 
+    app.route('/exams_user/:username')
+    .get(exams.get_exams_per_user);
+    
+    app.route('/exams_uvid/:username')
+    .get(exams.get_uvid_per_user);
+
     app.route('/exams/newExam')
     .post(exams.new_exam);
 
@@ -59,7 +65,7 @@ module.exports = function(app) {
     app.route('/department/:ID')
     .get(departments.get_department);
       
-    app.route('/departmentsbyuser/:user')
+    app.route('/departmentsbyuser/:username')
     .get(departments.get_department_by_boss);
 
     app.route('/departments/newDepartment')
@@ -115,9 +121,5 @@ module.exports = function(app) {
 
     app.route('/sheets/deleteSheet')
     .get(sheets.delete_sheet);
-
-
-    
-
 
 };
