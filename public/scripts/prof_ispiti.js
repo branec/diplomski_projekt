@@ -14,24 +14,23 @@ if (request.status >= 200 && request.status < 400) {
 data.forEach(exam => {
   var red = document.createElement("tr");
   var td1 = document.createElement("td");
-  td1.innerText = brojac;
+  td1.innerText = brojac.toString();
   brojac++;
   red.appendChild(td1);
 
-  var td2 = document.createElement("td");
-  td2.innerText = exam.Predmet;
-  red.appendChild(td2);
 
   var td3 = document.createElement("td");
   td3.innerText = exam.Naziv;
   red.appendChild(td3);
 
   var td4 = document.createElement("td");
-  td4.innerText = exam.VrijemeOd;
+  var d0 = new Date(exam.VrijemeOd);
+  td4.innerText = d0.toLocaleDateString().replace('/',".").replace('/',".");
   red.appendChild(td4);
 
   var td5 = document.createElement("td");
-  td5.innerText = exam.VrijemeDo;
+  var d = new Date(exam.VrijemeDo);
+  td5.innerText = d.toLocaleDateString().replace('/',".").replace('/',".");
   red.appendChild(td5);
 
   var td6 = document.createElement("td");
@@ -39,7 +38,7 @@ data.forEach(exam => {
   red.appendChild(td6);
 
   var td7 = document.createElement("td");
-  td7.innerText = exam.Trajanje;
+  td7.innerText = exam.Trajanje + " min";
   red.appendChild(td7);
 
   tablica.appendChild(red);
