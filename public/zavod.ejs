@@ -61,18 +61,18 @@
 
     </div>
     <div class="table-content">
-            <a href="/subjects/newSubject" >Dodaj novi predmet</a>
-        <h2>Popis svih predmeta:</h2>
+            <a href="/subjects/newSubject?department=<%=zavod%>&user=<%=korisnik.KorisnickoIme%>" >Dodaj novi predmet</a>
+        <h2>Popis svih predmeta zavoda:</h2>
         <table class="table">
             <th></th>
             <th>Naziv</th>
-            <th>Zavod</th>
+            <th>Nositelj</th>
 
             <%for (i=0; i<predmeti.length; i++){%>
                 <tr>
                     <td><%= i+1 %>.</td>
-                    <td> <a href='/prof_ispiti?user=<%=korisnik.KorisnickoIme%>&exam=<%=predmeti[i].Id[0]%>'><%= predmeti[i].Naziv[0] %></td>
-                    <td> <a href='/department/<%=predmeti[i].Id[1]%>?user=<%=korisnik.KorisnickoIme%>'><%= predmeti[i].Naziv[1] %></td>
+                    <td> <a href='/prof_ispiti?user=<%=korisnik.KorisnickoIme%>&exam=<%=predmeti[i].Id[0]%>'><%= predmeti[i].Naziv %></td>
+                    <td> <%=predmeti[i].Ime%> <%=predmeti[i].Prezime%></td>
                     <td>
                         <form method="POST" action="/subject/deleteSubject">
                             <input type="hidden" name="id" value="<%= predmeti[i].Id[0] %>" />
@@ -102,7 +102,3 @@
 </body>
 
 </html>
-
-
-
-

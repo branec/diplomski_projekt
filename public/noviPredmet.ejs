@@ -13,15 +13,18 @@
            <h2>Prijava</h2>
            <p>Molimo unesite novi predmet</p>
            </div>
-            <form id="newPredmet" method="POST" action="/subjects/newSubject">
-                
-                    <input type="text" id="Naziv" name="Naziv" placeholder="Naziv">
-
-                    <input type="text" id="ZavodId" name="ZavodId" placeholder="ZavodId">
-        
-                    <input type="text" id="KorisnikId" name="KorisnikId" placeholder="KorisnikId">
-                
-                <button type="submit" class="btn btn-primary">Kreiraj</button>
+            <form id="newPredmet" method="POST" action="/subjects/newSubject">  
+                <div>
+                    Naziv <br> <input type="text" id="Naziv" name="Naziv" placeholder="Naziv"> <br>
+                </div>
+                <div>
+                    Zavod <br> <input type="text" id="ZavodId" name="ZavodId" placeholder="ZavodId" value="<%= zavod ? zavod : '' %>"> <br>
+                </div>
+                <div>
+                    Nositelj <br> <input type="text" id="KorisnikId" name="KorisnikId" placeholder="KorisnikId" value="<%= korisnik ? korisnik : '' %>"> <br>
+                </div>
+                <br>
+                <button border-top="10px" type="submit" class="btn btn-primary">Kreiraj</button>
         
             </form>
             </div>

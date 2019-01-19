@@ -210,6 +210,29 @@ app.get('/prof_dash', (req, res) => {
         });
     });
 
+    app.get('/department/:department', (req, res) => {
+        var department = req.params.department;
+        var user = Globals.user;
+        if (user.KorisnickoIme !== req.query.user)
+        {
+            updateUser(req.query.user);
+        }
+        global.sql.connect(global.sqlConfig, function() {
+            var request = new sql.Request();
+            var query = `select * from PREDMET join Korisnik on Predmet.KorisnikId = Korisnik.Id where Predmet.ZavodID = ${department}`;
+            request.query(query, function(err, recordset) {
+                if (err) {
+                      sql.close();
+                      res.send(err);
+                  }
+                var predmet = recordset.recordset;
+                sql.close();
+                console.log(predmet);
+                res.render('zavod', {predmeti:predmet, korisnik:user, zavod:department});
+            });
+        });
+    });
+
     app.get('/ispiti', (req, res) => {
         if (req.session.user && req.cookies.user_sid) {
             res.sendFile(__dirname + '/public/ispiti.html');
@@ -300,7 +323,13 @@ app.get('/newUser', (req, res) => {
   
  
 app.get('/subjects/newSubject', (req, res) => {
-    res.render('noviPredmet');
+    var department = req.query.department
+    var user = Globals.user;
+    if (user.KorisnickoIme !== req.query.user)
+    {
+        updateUser(req.query.user);
+    }
+    res.render('noviPredmet', { zavod: department, korisnik: user.Id });
 });
 
 app.get('/logout', (req, res) => {
@@ -422,3 +451,22 @@ res.status(404).send("Sorry can't find that!")
 app.listen(port);
 
 console.log('RESTful API server started on: ' + port);
+
+function updateUser(username) {
+    if(username === undefined) {
+           return;
+    }
+
+    global.sql.connect(global.sqlConfig, function() {
+       var request = new sql.Request();
+       var query = `select * from Korisnik where KorisnickoIme = ${username}`;
+       request.query(query, function(err, recordset) {
+           if (err) {
+              sql.close();
+           }
+           var korisnik = recordset.recordset;
+           sql.close();
+           Globals.user = korisnik;
+       });
+    });
+}
