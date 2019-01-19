@@ -84,7 +84,13 @@ app.route('/login')
                   if(recordset.recordset[0]){
                     Globals.user=recordset.recordset[0];
                     req.session.user = username;
-                    res.redirect('/dashboard?user=' + username);
+                    if(recordset.recordset[0].TipId === 1){
+                        res.redirect('/dashboard?user=' + username);
+                    }else if(recordset.recordset[0].TipId === 2){
+                        res.redirect('/dashboard_prof?user=' + username);   
+                    }else{
+                        res.redirect('/login');
+                    }
                   }else{
                     res.redirect('/login');
                   }
@@ -101,6 +107,14 @@ app.route('/login')
           res.redirect('/login');
       }
   });
+
+  app.get('/dashboard_prof', (req, res) => {
+    if (req.session.user && req.cookies.user_sid) {
+        res.sendFile(__dirname + '/public/prof_dash.html');
+    } else {
+        res.redirect('/login');
+    }
+});
 
   app.get('/scanner', (req, res) => {
     if (req.session.user && req.cookies.user_sid) {
@@ -200,6 +214,39 @@ app.get('/prof_dash', (req, res) => {
             res.redirect('/login');
         }           
     });
+
+    //PROF POCETAK
+
+    app.get('/predmeti', (req, res) => {
+        if (req.session.user && req.cookies.user_sid) {
+            res.sendFile(__dirname + '/public/prof_predmeti.html');
+        } else {
+            res.redirect('/login');
+        }           
+    });
+    app.get('/ispravljanje', (req, res) => {
+        if (req.session.user && req.cookies.user_sid) {
+            res.sendFile(__dirname + '/public/ispitprof_ispravljanje.html');
+        } else {
+            res.redirect('/login');
+        }           
+    });
+    app.get('/ispravljeno', (req, res) => {
+        if (req.session.user && req.cookies.user_sid) {
+            res.sendFile(__dirname + '/public/prof_ispravljeno.html');
+        } else {
+            res.redirect('/login');
+        }           
+    });
+
+    app.get('/prof_ispiti', (req, res) => {
+        if (req.session.user && req.cookies.user_sid) {
+            res.sendFile(__dirname + '/public/prof_ispiti.html');
+        } else {
+            res.redirect('/login');
+        }           
+    });
+    //PROF KRAJ
 
 app.get('/newUser', (req, res) => {
     res.render('novi_user');

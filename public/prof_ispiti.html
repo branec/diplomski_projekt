@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Evidencija za profesore i studente</title>
+    <link href="/scripts/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/scripts/sidebar.css" rel="stylesheet">
+    <link href="/scripts/styles.css" rel="stylesheet">
+
+</head>
+<body>
+    <header>
+        <div class="header-middle-prof">
+        <ul class="header-navigation">
+            <li><img src="/images/fer_logo.PNG" /></li>
+            <li><a href="/dashboard">Ispravljanje</a></li>
+            <li>|</li>
+            <li><a href="/predmeti">Ispravljeni ispiti</a></li>
+            <li>|</li>
+            <li><a href="/ispiti">Statistika</a></li>
+            <li>|</li>
+            <li><a href="/logout">Odjava</a></li>
+        </ul>
+        </div>
+    </header>
+    <div id="wrapper">
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+                <li class="sidebar-brand">
+                    <a href="#">
+                        Naslovnica
+                    </a>
+                </li>
+                <li>
+                    <a href="/predmeti">Ispravljanje</a>
+                </li>
+                <li>
+                    <a href="/ispiti">Ispravljeni ispiti</a>
+                </li>
+                <li>
+                    <a href="/ispiti">Statistika</a>
+                </li>
+                <li>
+                    <a href="/logout">Odjava</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="main-wrapper" class="mx-auto" style="width: 800px;">
+
+    <h2>Ispti</h2>
+    <table id="prof_ispiti" class="table m-1">
+        <thead>
+            <th></th>
+            <th>Predmet</th>
+            <th>Naziv</th>
+            <th>Vrijeme pocetka</th>
+            <th>Vrijeme zavrsetka</th>
+            <th>Prostorija</th>
+            <th>Trajanje</th>
+        </thead>
+        <tbody id="prof_ispiti_table">
+
+
+
+        </tbody>
+    </table>
+
+    <h2>Studenti na predmetu</h2>
+
+<table id="prof_studenti" class="table m-1">
+        <thead>
+
+        </thead>
+        <tbody id="prof_studenti_table">
+
+            <th></th>
+            <th>JMBAG</th>
+            <th>Ime</th>
+            <th>Prezime</th>
+
+        </tbody>
+    </table>
+
+
+    </div>
+    
+    <!-- /#wrapper -->
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="/scripts/vendor/jquery/jquery.min.js"></script>
+    <script src="/scripts/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="scripts/prof_ispiti.js"></script>
+
+    <!-- Menu Toggle Script -->
+    <script>
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+        $("#menu-toggle").addClass("opened-hamburger");
+    });
+    </script>
+
+</body>
+
+</html>

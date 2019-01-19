@@ -356,3 +356,21 @@ exports.get_exams_per_user = function (req, res) {
           sql.close();
       });
   });}
+
+  exports.get_uvid_per_prof = function (req, res) {
+    global.sql.connect(global.sqlConfig, function() {
+      var request = new sql.Request();
+    
+      var upit = "SELECT ispit.Id,Ispit.Naziv,Ispit.VrijemeOd, Ispit.VrijemeDo,Ispit.Trajanje,Ispit.Prostorija,Ispit.STATUS FROM ISPIT " +
+      "LEFT OUTER JOIN PREDMET ON PREDMET.ID = ISPIT.PredmetId " +
+      "LEFT OUTER JOIN Korisnik ON Korisnik.ID = Predmet.KorisnikId " +
+      `WHERE Korisnik.KorisnickoIme = '${req.params.username}' AND Predmet.Id = ${req.params.subject}`
+
+      request.query(upit , function(err, recordset) {
+          if (err)
+          res.send(err);
+    
+          res.json(recordset.recordsets[0]);
+          sql.close();
+      });
+  });}

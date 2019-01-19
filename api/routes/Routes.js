@@ -50,6 +50,13 @@ module.exports = function(app) {
     app.route('/exams_uvid/:username')
     .get(exams.get_uvid_per_user);
 
+    app.route('/exams_prof/:username/:subject')
+    .get(exams.get_uvid_per_prof);
+
+    app.route('/users/:subject')
+    .get(users.get_users_by_subject);
+
+
     app.route('/exams/newExam')
     .post(exams.new_exam);
 
