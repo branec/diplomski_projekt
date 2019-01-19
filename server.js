@@ -78,8 +78,10 @@ app.route('/login')
               var query = 'select * FROM Korisnik WHERE KorisnickoIme = \'' + username + '\' AND Lozinka =\'' + password + '\'';
         
               request.query(query, function(err, recordset) {
-                  if (err)
-                  res.send(err);
+                  if (err) {
+                      sql.close();
+                      res.send(err);
+                  }
         
                   if(recordset.recordset[0]){
                     Globals.user=recordset.recordset[0];
@@ -87,7 +89,7 @@ app.route('/login')
                     if(Globals.user.TipId === 1)
                         res.redirect('/dashboard?user=' + username);
                     else
-                        res.redirect('prof_dash');
+                        res.redirect(`prof_dash?user=${username}`);
                   }else{
                     res.redirect('/login');
                   }
@@ -156,7 +158,7 @@ app.get('/uvid/:exam', (req, res) => {
 });
 
 app.get('/prof_dash', (req, res) => {
-    if (req.session.user && req.cookies.user_sid) {
+    if (req.session.user && req.cookies.user_sid) {      
         res.sendFile(__dirname + '/public/prof_dash.html');
     } else {
         res.redirect('/login');
@@ -172,8 +174,10 @@ app.get('/prof_dash', (req, res) => {
             var request = new sql.Request();
             var query = 'select * FROM Korisnik WHERE TipId=1';
             request.query(query, function(err, recordset) {
-                if (err)
-                res.send(err);
+                if (err) {
+                      sql.close();
+                      res.send(err);
+                  }
                 var student = (recordset.recordset);
                 sql.close();
                 res.render('studenti', {students:student});
@@ -186,10 +190,10 @@ app.get('/prof_dash', (req, res) => {
             var user = Globals.user;
             var query = `select * from PREDMET join ZAVOD on Predmet.ZavodID=ZAVOD.Id where Predmet.KorisnikId = ${user.Id}`;
             request.query(query, function(err, recordset) {
-                if (err){
-                    res.send(err);
-                    sql.close();
-                }
+                if (err) {
+                      sql.close();
+                      res.send(err);
+                  }
                 var predmet = recordset.recordset;
                 sql.close();
                 console.log(predmet);
@@ -237,9 +241,9 @@ app.get('/newUser', (req, res) => {
        
           request.query(query, function(err, recordset) {
                 if (err) {
+                    sql.close();
                     res.send(err);
-                    sql.close()
-                    return
+                    return;
                   }
     
                 if(recordset.rowsAffected.length === 1){
