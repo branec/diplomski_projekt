@@ -84,7 +84,10 @@ app.route('/login')
                   if(recordset.recordset[0]){
                     Globals.user=recordset.recordset[0];
                     req.session.user = username;
-                    res.redirect('/dashboard?user=' + username);
+                    if(Globals.user.TipId === 1)
+                        res.redirect('/dashboard?user=' + username);
+                    else
+                        res.redirect('prof_dash');
                   }else{
                     res.redirect('/login');
                   }
@@ -180,17 +183,19 @@ app.get('/prof_dash', (req, res) => {
     app.get('/predmeti', (req, res) => {
         global.sql.connect(global.sqlConfig, function() {
             var request = new sql.Request();
-            var query = 'select * from PREDMET, ZAVOD where Predmet.ZavodID=ZAVOD.Id';
+            var user = Globals.user;
+            var query = `select * from PREDMET join ZAVOD on Predmet.ZavodID=ZAVOD.Id where Predmet.KorisnikId = ${user.Id}`;
             request.query(query, function(err, recordset) {
                 if (err){
-                res.send(err);
-                sql.close();
-            }
-                var predmet = (recordset.recordset);
+                    res.send(err);
+                    sql.close();
+                }
+                var predmet = recordset.recordset;
                 sql.close();
                 console.log(predmet);
                 res.render('predmeti', {predmeti:predmet});
-            }); });
+            });
+        });
     });
 
     app.get('/ispiti', (req, res) => {

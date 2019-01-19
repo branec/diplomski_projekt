@@ -16,14 +16,15 @@
 <body>
 
     <header>
-        <div class="header-middle">
+        <div class="header-middle-prof">
         <ul class="header-navigation">
             <li><img src="/images/fer_logo.PNG" /></li>
-            <li><a href="/dashboard">Naslovnica</a></li>
-            <li><a href="/predmeti">Predmeti</a></li>
-            <li><a href="/ispiti">Ispiti</a></li>
-            <li><a href="/studenti">Studenti</a></li>
-            <li><a href="/scanner">Skener</a></li>
+            <li><a href="/dashboard">Ispravljanje</a></li>
+            <li>|</li>
+            <li><a href="/predmeti">Ispravljeni ispiti</a></li>
+            <li>|</li>
+            <li><a href="/ispiti">Statistika</a></li>
+            <li>|</li>
             <li><a href="/logout">Odjava</a></li>
         </ul>
         </div>
@@ -70,8 +71,8 @@
             <%for (i=0; i<predmeti.length; i++){%>
                 <tr>
                     <td><%= i+1 %>.</td>
-                    <td><%= predmeti[i].Naziv[0] %></td>
-                    <td><%= predmeti[i].Naziv[1] %></td>
+                    <td> <a href='/subjects/<%=predmeti[i].Id[0]%>'><%= predmeti[i].Naziv[0] %></td>
+                    <td> <a href='/department/<%=predmeti[i].Id[0]%>'><%= predmeti[i].Naziv[1] %></td>
                     <td>
                         <form method="POST" action="/subject/deleteSubject">
                             <input type="hidden" name="id" value="<%= predmeti[i].Id[0] %>" />
