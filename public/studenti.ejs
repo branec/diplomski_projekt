@@ -75,6 +75,9 @@
                     <td><%= students[i].Prezime %></td>
                     <td><%= students[i].JMBAG %></td>
                     <td>
+                        <a href="/updateUser?Id=<%=students[i].Id%>">Update</a>
+                    </td>
+                    <td>
                         <form method="POST" action="/delUser">
                             <input type="hidden" name="id" value="<%= students[i].Id %>" />
                             <button type="submit">Delete</button>

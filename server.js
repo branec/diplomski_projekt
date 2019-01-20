@@ -344,6 +344,17 @@ app.get('/subject/updateSubject', (req, res) => {
     res.render('updatePredmet', { predmet: predmet, zavod: department, korisnik: user.Id });
 });
 
+app.get('/updateUser', (req, res) => {
+    var department = req.query.department
+    var user = Globals.user;
+    var id = req.query.Id;
+    if (user.KorisnickoIme !== req.query.user)
+    {
+        updateUser(req.query.user);
+    }
+    res.render('updateStudent', { id: id, zavod: department, korisnik: user.Id });
+});
+
 app.get('/logout', (req, res) => {
   if (req.session.user && req.cookies.user_sid) {
       res.clearCookie('user_sid');
