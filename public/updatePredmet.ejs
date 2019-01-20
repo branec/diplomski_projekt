@@ -1,0 +1,40 @@
+<html>
+    <head>
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+            <link rel="stylesheet" type="text/css" href="/scripts/styles.css">    
+    </head>
+    <body id="updatePredmet">
+        <div class="container">
+        <div class="login-form">
+        <div class="main-div">
+            <div class="panel">
+           <h2>Update</h2>
+           <p>Molimo uredite predmet</p>
+           </div>
+           
+            <form id="updatePredmet" method="POST" action="/subject/updateSubject">  
+                <div>
+                    Id <br> <input type="text" id="id" name="id" placeholder="id" value="<%= predmet ? predmet : '' %>"> <br>
+               </div>
+                <div>
+                    Naziv <br> <input type="text" id="Naziv" name="Naziv" placeholder="Naziv"> <br>
+                </div>
+                <div>
+                    Zavod <br> <input type="text" id="ZavodId" name="ZavodId" placeholder="ZavodId" value="<%= zavod ? zavod : '' %>"> <br>
+                </div>
+                <div>
+                    Nositelj <br> <input type="text" id="KorisnikId" name="KorisnikId" placeholder="KorisnikId" value="<%= korisnik ? korisnik : '' %>"> <br>
+                </div>
+                <br>
+                <button border-top="10px" type="submit" class="btn btn-primary">Update</button>
+        
+            </form>
+            </div>
+        </div></div></div>
+        
+        
+        </body>
+
+</html>

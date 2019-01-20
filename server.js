@@ -7,7 +7,8 @@ var express = require('express'),
   const fs = require("fs");
 
 var Globals = {
-    'user': {}
+    'user': {},
+    'predmeti': {}
 }
 
 module.exports = Globals;
@@ -330,6 +331,17 @@ app.get('/subjects/newSubject', (req, res) => {
         updateUser(req.query.user);
     }
     res.render('noviPredmet', { zavod: department, korisnik: user.Id });
+});
+
+app.get('/subject/updateSubject', (req, res) => {
+    var department = req.query.department
+    var user = Globals.user;
+    var predmet = req.query.Id;
+    if (user.KorisnickoIme !== req.query.user)
+    {
+        updateUser(req.query.user);
+    }
+    res.render('updatePredmet', { predmet: predmet, zavod: department, korisnik: user.Id });
 });
 
 app.get('/logout', (req, res) => {

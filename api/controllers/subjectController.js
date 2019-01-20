@@ -156,20 +156,25 @@ exports.update_subject = function (req, res) {
     global.sql.connect(global.sqlConfig, function() {
         var request = new sql.Request();
 
-        var id = req.body.Id;
+        var id = req.body.id;
         var name = req.body.Naziv;
         var departmentId = req.body.ZavodId;
         var userId = req.body.KorisnikId;
-        var query=`UPDATE Korisnik SET Naziv=\'${name}\', ZavodId=\'${departmentId}\', KorisnikId=\'${userId}\' WHERE Id=\'${id}\'`;
-        request.query(query,function(err, recordset) {
-            if(err)
-            res.send(err);
-
-            if(recordset.recordset[0].postoji === 1){
-                res.send(200)
-            }else{
-                res.json({odgovor:"false"})
-            }
+        var query=`UPDATE Predmet SET Naziv='${name}', ZavodId='${departmentId}', KorisnikId='${userId}' WHERE Id='${id}'`;
+        console.log(req.body, query)
+       
+          request.query(query, function(err, recordset) {
+                if (err) {
+                    sql.close();
+                    res.send(err);
+                    return;
+                  }
+    
+                if(recordset.rowsAffected.length === 1){
+                  res.redirect("/predmeti")
+                }else{
+                  res.json({odgovor:"false"})
+                }
 
             sql.close();
         });
