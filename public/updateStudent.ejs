@@ -1,0 +1,52 @@
+<html>
+    <head>
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+            <link rel="stylesheet" type="text/css" href="/scripts/styles.css">    
+    </head>
+    <body id="updateStudent">
+        <div class="container">
+        <div class="login-form">
+        <div class="main-div">
+            <div class="panel">
+           <h2>Update</h2>
+           <p>Molimo uredite studenta</p>
+           </div>
+           
+            <form id="updateStudent" method="POST" action="/updateUser">  
+                <div>
+                    Id <br> <input type="text" id="id" name="id" placeholder="id" value="<%= id ? id : '' %>"> <br>
+               </div>
+                <div>
+                    KorisnickoIme <br> <input type="text" id="KorisnickoIme" name="KorisnickoIme" placeholder="KorisnickoIme"> <br>
+                </div>
+                <div>
+                    Ime <br> <input type="text" id="Ime" name="Ime" placeholder="Ime"> <br>
+                </div>
+                <div>
+                    JMBAG <br> <input type="text" id="JMBAG" name="JMBAG" placeholder="JMBAG"> <br>
+                </div>
+                <div>
+                    Prezime <br> <input type="text" id="Prezime" name="Prezime" placeholder="Prezime"> <br>
+                </div>
+                <div>
+                    Datum <br> <input type="text" id="Datum" name="Datum" placeholder="Datum"> <br>
+                </div>
+                <div>
+                    Lozinka <br> <input type="text" id="Lozinka" name="Lozinka" placeholder="Lozinka"> <br>
+                </div>
+                <div>
+                    TipId <br> <input type="text" id="TipId" name="TipId" placeholder="TipId"> <br>
+                </div>
+                <br>
+                <button border-top="10px" type="submit" class="btn btn-primary">Update</button>
+        
+            </form>
+            </div>
+        </div></div></div>
+        
+        
+        </body>
+
+</html>

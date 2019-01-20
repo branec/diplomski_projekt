@@ -169,20 +169,24 @@ exports.update_user = function (req, res) {
       var surname = req.body.Prezime;
       var date = req.body.Datum;
       var type = req.body.TipId;
-      var id = req.body.Id;
+      var id = req.body.id;
+      console.log(req.body)
       var query = `UPDATE Korisnik SET KorisnickoIme = \'${username}\', Ime = \'${name}\', JMBAG = \'${jmbag}\', Prezime = \'${surname}\', Datum =\'${date}\', Lozinka = \'${password}\', TipId = \'${type}\'  WHERE Id = '${id}'`;
-
+      console.log(req.body, query)
       request.query(query, function(err, recordset) {
-          if (err)
-          res.send(err);
-
-          if(recordset.rowsAffected.length === 1){
-            res.json({odgovor:"true"})
-          }else{
-            res.json({odgovor:"false"})
+        if (err) {
+            sql.close();
+            res.send(err);
+            return;
           }
 
-          sql.close();
+        if(recordset.rowsAffected.length === 1){
+          res.redirect("/studenti")
+        }else{
+          res.json({odgovor:"false"})
+        }
+
+      sql.close();
       });
   });
 }

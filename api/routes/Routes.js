@@ -20,6 +20,9 @@ module.exports = function(app) {
     app.route('/delUser')
     .post(users.delete_user);
 
+    app.route('/updateUser')
+    .post(users.update_user);
+
     app.route('/login')
     .post(users.login);
 
@@ -33,7 +36,7 @@ module.exports = function(app) {
     .post(subjects.new_subject);
 
     app.route('/subject/updateSubject')
-    .put(subjects.update_subject);
+    .post(subjects.update_subject);
 
     app.route('/subject/deleteSubject')
     .post(subjects.delete_subject);

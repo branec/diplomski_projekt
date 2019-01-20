@@ -16,14 +16,15 @@
 <body>
 
     <header>
-        <div class="header-middle">
+        <div class="header-middle-prof">
         <ul class="header-navigation">
             <li><img src="/images/fer_logo.PNG" /></li>
-            <li><a href="/dashboard">Naslovnica</a></li>
-            <li><a href="/predmeti">Predmeti</a></li>
-            <li><a href="/ispiti">Ispiti</a></li>
-            <li><a href="studenti">Studenti</a></li>
-            <li><a href="/scanner">Skener</a></li>
+            <a id="predmeti" id="predmeti">Predmeti</a>
+            <li>|</li>
+            <a id="ispravljanje">Ispravljanje</a>
+            <li>|</li>
+            <a id="ispravljeni">Ispravljeni ispiti</a>
+            <li>|</li>
             <li><a href="/logout">Odjava</a></li>
         </ul>
         </div>
@@ -60,42 +61,38 @@
 
     </div>
     <div class="table-content">
-            <a href="/newUser" >Dodaj novog studenta</a>
-        <h2>Popis svih studenata:</h2>
+            <a href="/subjects/newSubject?department=<%=zavod%>&user=<%=korisnik.KorisnickoIme%>" >Dodaj novi predmet</a>
+        <h2>Popis svih predmeta zavoda:</h2>
         <table class="table">
             <th></th>
-            <th>Ime</th>
-            <th>Prezime</th>
-            <th>JMBAG</th>
+            <th>Naziv</th>
+            <th>Nositelj</th>
 
-            <%for (i=0; i<students.length; i++){%>
+            <%for (i=0; i<predmeti.length; i++){%>
                 <tr>
                     <td><%= i+1 %>.</td>
-                    <td><%= students[i].Ime %></td>
-                    <td><%= students[i].Prezime %></td>
-                    <td><%= students[i].JMBAG %></td>
+                    <td> <a href='/prof_ispiti?user=<%=korisnik.KorisnickoIme%>&exam=<%=predmeti[i].Id[0]%>'><%= predmeti[i].Naziv %></td>
+                    <td> <%=predmeti[i].Ime%> <%=predmeti[i].Prezime%></td>
                     <td>
-                        <a href="/updateUser?Id=<%=students[i].Id%>">Update</a>
+                        <a href="/subject/updateSubject?Id=<%=predmeti[i].Id[0]%>">Update</a>
                     </td>
                     <td>
-                        <form method="POST" action="/delUser">
-                            <input type="hidden" name="id" value="<%= students[i].Id %>" />
+                        <form method="POST" action="/subject/deleteSubject">
+                            <input type="hidden" name="id" value="<%= predmeti[i].Id[0] %>" />
                             <button type="submit">Delete</button>
-                    </form>
+                        </form>
                     </td>
-
                 </tr>
             <% } %>
         </table>
 
     </div>
-
-    
     <!-- /#wrapper -->
 
     <!-- Bootstrap core JavaScript -->
     <script src="/scripts/vendor/jquery/jquery.min.js"></script>
     <script src="/scripts/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="scripts/headerProf.js"></script>
 
     <!-- Menu Toggle Script -->
     <script>
@@ -109,7 +106,3 @@
 </body>
 
 </html>
-
-
-
-
