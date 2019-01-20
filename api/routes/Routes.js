@@ -52,10 +52,14 @@ module.exports = function(app) {
 
     app.route('/exams_prof/:username/:subject')
     .get(exams.get_uvid_per_prof);
+    app.route('/exams_per_prof/:username')
+    .get(exams.get_exam_per_prof);
 
     app.route('/users/:subject')
     .get(users.get_users_by_subject);
 
+    app.route('/usersbyprof/:prof')
+    .get(users.get_users_by_prof);
 
     app.route('/exams/newExam')
     .post(exams.new_exam);

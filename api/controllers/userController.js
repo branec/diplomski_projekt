@@ -339,3 +339,24 @@ exports.get_users_by_subject = function (req, res) {
 });
 }
 
+exports.get_users_by_prof = function (req, res) {
+  global.sql.close();
+  global.sql.connect(global.sqlConfig, function() {
+    var request = new sql.Request();
+    var prof = req.params.prof; 
+    var query = 'select distinct Korisnik.* FROM Korisnik ' +
+                'LEFT OUTER JOIN KorisnikPredmet ON KorisnikPredmet.KorisnikId = Korisnik.ID ' +
+                'LEFT OUTER JOIN PREDMET ON PREDMET.ID = KorisnikPredmet.PredmetId ' +
+                ' LEFT OUTER JOIN Korisnik prof ON prof.Id = Predmet.KorisnikId ' +
+                 ` WHERE prof.KorisnickoIme = '${prof}'`;
+
+    request.query(query, function(err, recordset) {
+        if (err)
+        res.send(err);
+
+        res.json(recordset.recordsets[0]);
+        sql.close();
+    });
+});
+}
+

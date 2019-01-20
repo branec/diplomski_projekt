@@ -43,7 +43,7 @@ data.forEach(exam => {
   var td8 = document.createElement("td");
   var a = document.createElement("a");
   a.innerText = "Uvid";
-  a.href = `/uvid/${exam.Id}?user=${username}`;
+  a.href = `/uvid?exam=${exam.Id}&user=${username}`;
   td8.appendChild(a);
   red.appendChild(td8);
 
