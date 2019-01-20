@@ -62,7 +62,8 @@ var td1 = document.createElement("td");
 td1.innerText = brojac;
 brojac++;
 red.appendChild(td1);
-
+console.log(user);
+console.log(exam);
 var td2 = document.createElement("td");
 td2.innerText = user.JMBAG;
 red.appendChild(td2);

@@ -25,6 +25,8 @@
             <li>|</li>
             <a id="ispravljeni">Ispravljeni ispiti</a>
             <li>|</li>
+            <a id="studenti">Studenti</a>
+            <li>|</li>
             <li><a href="/logout">Odjava</a></li>
         </ul>
         </div>
@@ -51,15 +53,8 @@
                 </li>
             </ul>
         </div>
-
-        <div id="page-content-wrapper">
-            <div class="container-fluid">
-                <a href="#menu-toggle" class="btn btn-secondary" id="menu-toggle"><img width="30px" src="images/ham-meni.png" /></a>
-            </div>
-        </div>
-  
-
     </div>
+
     <div class="table-content">
             <a href="/subjects/newSubject?department=<%=zavod%>&user=<%=korisnik.KorisnickoIme%>" >Dodaj novi predmet</a>
         <h2>Popis svih predmeta zavoda:</h2>
@@ -92,7 +87,8 @@
     <!-- Bootstrap core JavaScript -->
     <script src="/scripts/vendor/jquery/jquery.min.js"></script>
     <script src="/scripts/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="scripts/headerProf.js"></script>
+    <script src="/scripts/prof_ispiti.js"></script>
+    <script src="/scripts/headerProf.js"></script>
 
     <!-- Menu Toggle Script -->
     <script>
