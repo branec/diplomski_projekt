@@ -76,7 +76,7 @@
                     <td> <a href='/prof_ispiti?user=<%=korisnik.KorisnickoIme%>&exam=<%=predmeti[i].Id[0]%>'><%= predmeti[i].Naziv[0] %></td>
                     <td> <a href='/department/<%=predmeti[i].Id[1]%>?user=<%=korisnik.KorisnickoIme%>'><%= predmeti[i].Naziv[1] %></td>
                     <td>
-                        <button href="/subject/updateSubject?Id=<%=predmeti[i].Id[0]%>">Update</button>
+                        <a class="button" href="/subject/updateSubject?Id=<%=predmeti[i].Id[0]%>">Update</a>
                     </td>
                     <td>
                         <form method="POST" action="/subject/deleteSubject">

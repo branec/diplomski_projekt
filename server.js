@@ -56,7 +56,15 @@ app.use((req, res, next) => {
 
 var sessionChecker = (req, res, next) => {
   if (req.session.user && req.cookies.user_sid) {
-      res.redirect('/dashboard');
+      var user = getUser(req.query.user);
+      if(!user) {
+          req.session.user = undefined;
+          res.redirect('/login');
+      } else if(user.TipId === 1) {
+          res.redirect(`/dashboard?user=${user.KorisnickoIme}`);
+      } else {
+          res.redirect(`/prof_dash?user=${user.KorisnickoIme}`);
+      }
   } else {
       next();
   }    
@@ -102,7 +110,13 @@ app.route('/login')
 
     app.get('/dashboard', (req, res) => {
       if (req.session.user && req.cookies.user_sid) {
-          res.sendFile(__dirname + '/public/dash.html');
+          var user = getUser(req.query.user);
+          if(user && user.TipId === 1) {
+              res.sendFile(__dirname + '/public/dash.html');
+          } else {
+              req.session.user = undefined;
+              res.redirect('/login');
+          }
       } else {
           res.redirect('/login');
       }
@@ -128,7 +142,13 @@ app.route('/login')
 
   app.get('/dashboard_prof', (req, res) => {
     if (req.session.user && req.cookies.user_sid) {
-        res.sendFile(__dirname + '/public/prof_dash.html');
+          var user = getUser(req.query.user);
+          if(user || user.TipId === 2) {
+              res.sendFile(__dirname + '/public/prof_dash.html');
+          } else {
+              req.session.user = undefined;
+              res.redirect('/login');
+          }
     } else {
         res.redirect('/login');
     }
@@ -227,8 +247,14 @@ app.get('/uvid_student/:exam/:user', (req, res) => {
 });
 
 app.get('/prof_dash', (req, res) => {
-    if (req.session.user && req.cookies.user_sid) {      
-        res.sendFile(__dirname + '/public/prof_dash.html');
+    if (req.session.user && req.cookies.user_sid) {
+        var user = getUser(req.query.user);
+        if(user || user.TipId === 2) {
+            res.sendFile(__dirname + '/public/prof_dash.html');
+        } else {
+            req.session.user = undefined;
+            res.redirect('/login');
+        }
     } else {
         res.redirect('/login');
     }
@@ -255,8 +281,10 @@ app.get('/prof_dash', (req, res) => {
 
     app.get('/predmeti', (req, res) => {
         var user = getUser(req.query.user);
-        if(!user) {
+        if(!user || user.TipId === 1) {
+            req.session.user = undefined;
             res.redirect('/login');
+            return;
         }
         global.sql.connect(global.sqlConfig, function() {
             var request = new sql.Request();
@@ -277,7 +305,8 @@ app.get('/prof_dash', (req, res) => {
     app.get('/department/:department', (req, res) => {
         var department = req.params.department;
         var user = getUser(req.query.user);
-        if(!user) {
+        if(!user || user.TipId === 1) {
+            req.session.user = undefined;
             res.redirect('/login');
             return;
         }
@@ -387,7 +416,7 @@ app.get('/newUser', (req, res) => {
   
  
 app.get('/subjects/newSubject', (req, res) => {
-    var department = req.query.department
+    var department = req.query.department;
     var user = getUser(req.query.user);
     if(!user) {
         res.redirect('/login');
@@ -396,7 +425,7 @@ app.get('/subjects/newSubject', (req, res) => {
 });
 
 app.get('/subject/updateSubject', (req, res) => {
-    var department = req.query.department
+    var department = req.query.department;
     var predmet = req.query.Id;
     var user = getUser(req.query.user);
     if(!user) {
@@ -613,7 +642,7 @@ function getUser(username) {
         return ;
     }
     var user = Globals.user.filter(x => x.KorisnickoIme === username);
-    if(user) {
+    if(user.length !== 0) {
         return user[0];
     }
     return Globals.user[0];
