@@ -69,7 +69,7 @@
                     <td> <a href='/prof_ispiti?user=<%=korisnik.KorisnickoIme%>&exam=<%=predmeti[i].Id[0]%>'><%= predmeti[i].Naziv %></td>
                     <td> <%=predmeti[i].Ime%> <%=predmeti[i].Prezime%></td>
                     <td>
-                        <a href="/subject/updateSubject?Id=<%=predmeti[i].Id[0]%>">Update</a>
+                        <button href="/subject/updateSubject?Id=<%=predmeti[i].Id[0]%>">Update</button>
                     </td>
                     <td>
                         <form method="POST" action="/subject/deleteSubject">
