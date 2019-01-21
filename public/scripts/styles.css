@@ -300,11 +300,18 @@ width: 640px;
 }
 .container-canvas{
   display:inline-block;
-  width:640px; 
-  height:480px;
+  width:650px; 
+  height:490px;
   margin: 0 auto; 
   position:relative; 
   border:5px solid black; 
   border-radius: 10px; 
   box-shadow: 0 5px 50px #333}
+
+
+  .main-wrapper{
+    width: 50%;
+    margin: auto;
+    margin-top: 5%;
+  }
 

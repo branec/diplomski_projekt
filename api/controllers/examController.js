@@ -339,6 +339,7 @@ exports.get_exams_per_user = function (req, res) {
 
 
   exports.get_uvid_per_user = function (req, res) {
+    global.sql.close();
     global.sql.connect(global.sqlConfig, function() {
       var request = new sql.Request();
     

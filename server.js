@@ -73,7 +73,7 @@ app.route('/login')
     .post((req, res) => {
         var username = req.body.username,
             password = req.body.password;
-
+            global.sql.close();
             global.sql.connect(global.sqlConfig, function() {
               var request = new sql.Request();
               var query = 'select * FROM Korisnik WHERE KorisnickoIme = \'' + username + '\' AND Lozinka =\'' + password + '\'';
