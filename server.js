@@ -7,7 +7,7 @@ var express = require('express'),
   const fs = require("fs");
 
 var Globals = {
-    'user': {},
+    'user': [],
     'predmeti': {}
 }
 
@@ -85,9 +85,9 @@ app.route('/login')
                   }
         
                   if(recordset.recordset[0]){
-                    Globals.user=recordset.recordset[0];
+                    Globals.user.push(recordset.recordset[0]);
                     req.session.user = username;
-                    if(Globals.user.TipId === 1)
+                    if(recordset.recordset[0].TipId === 1)
                         res.redirect('/dashboard?user=' + username);
                     else
                         res.redirect(`prof_dash?user=${username}`);
@@ -254,18 +254,19 @@ app.get('/prof_dash', (req, res) => {
     });
 
     app.get('/predmeti', (req, res) => {
+        var user = getUser(req.query.user);
+        if(!user) {
+            res.redirect('/login');
+        }
         global.sql.connect(global.sqlConfig, function() {
             var request = new sql.Request();
-            var user = Globals.user;
             var query = `select * from PREDMET join ZAVOD on Predmet.ZavodID=ZAVOD.Id where Predmet.KorisnikId = ${user.Id}`;
             request.query(query, function(err, recordset) {
                 if (err) {
                       sql.close();
                       res.send(err);
                   }
-                var predmet = recordset.
-                
-                recordset;
+                var predmet = recordset.recordset;
                 sql.close();
                 console.log(predmet);
                 res.render('predmeti', {predmeti:predmet, korisnik:user});
@@ -275,10 +276,10 @@ app.get('/prof_dash', (req, res) => {
 
     app.get('/department/:department', (req, res) => {
         var department = req.params.department;
-        var user = Globals.user;
-        if (user.KorisnickoIme !== req.query.user)
-        {
-            updateUser(req.query.user);
+        var user = getUser(req.query.user);
+        if(!user) {
+            res.redirect('/login');
+            return;
         }
         global.sql.connect(global.sqlConfig, function() {
             var request = new sql.Request();
@@ -387,32 +388,29 @@ app.get('/newUser', (req, res) => {
  
 app.get('/subjects/newSubject', (req, res) => {
     var department = req.query.department
-    var user = Globals.user;
-    if (user.KorisnickoIme !== req.query.user)
-    {
-        updateUser(req.query.user);
+    var user = getUser(req.query.user);
+    if(!user) {
+        res.redirect('/login');
     }
     res.render('noviPredmet', { zavod: department, korisnik: user.Id });
 });
 
 app.get('/subject/updateSubject', (req, res) => {
     var department = req.query.department
-    var user = Globals.user;
     var predmet = req.query.Id;
-    if (user.KorisnickoIme !== req.query.user)
-    {
-        updateUser(req.query.user);
+    var user = getUser(req.query.user);
+    if(!user) {
+        res.redirect('/login');
     }
     res.render('updatePredmet', { predmet: predmet, zavod: department, korisnik: user.Id });
 });
 
 app.get('/updateUser', (req, res) => {
-    var department = req.query.department
-    var user = Globals.user;
+    var department = req.query.department;
     var id = req.query.Id;
-    if (user.KorisnickoIme !== req.query.user)
-    {
-        updateUser(req.query.user);
+    var user = getUser(req.query.user);
+    if(!user) {
+        res.redirect('/login');
     }
     res.render('updateStudent', { id: id, zavod: department, korisnik: user.Id });
 });
@@ -610,21 +608,13 @@ app.listen(port);
 
 console.log('RESTful API server started on: ' + port);
 
-function updateUser(username) {
-    if(username === undefined) {
-           return;
+function getUser(username) {
+    if(Globals.user.length === 0) {
+        return ;
     }
-
-    global.sql.connect(global.sqlConfig, function() {
-       var request = new sql.Request();
-       var query = `select * from Korisnik where KorisnickoIme = ${username}`;
-       request.query(query, function(err, recordset) {
-           if (err) {
-              sql.close();
-           }
-           var korisnik = recordset.recordset;
-           sql.close();
-           Globals.user = korisnik;
-       });
-    });
+    var user = Globals.user.filter(x => x.KorisnickoIme === username);
+    if(user) {
+        return user[0];
+    }
+    return Globals.user[0];
 }
