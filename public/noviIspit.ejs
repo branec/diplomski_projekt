@@ -1,0 +1,45 @@
+<html>
+    <head>
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+            <link rel="stylesheet" type="text/css" href="/scripts/styles.css">    
+    </head>
+    <body id="noviIspit">
+        <div class="container">
+        <div class="login-form">
+        <div class="main-div">
+            <div class="panel">
+           <h2>Prijava</h2>
+           <p>Molimo unesite novi ispit</p>
+           </div>
+            <form id="newIspit" method="POST" action="/exams/newExam">  
+                <div>
+                    Naziv <br> <input type="text" id="Naziv" name="Naziv" placeholder="Naziv"> <br>
+                </div>
+                <div>
+                    Vrijeme Od <br> <input type="text" id="VrijemeOd" name="VrijemeOd" placeholder="VrijemeOd"> <br>
+                </div>
+                <div>
+                    Vrijeme Do <br> <input type="text" id="VrijemeDo" name="VrijemeDo" placeholder="VrijemeDo"> <br>
+                </div>
+                <div>
+                    Trajanje <br> <input type="text" id="Trajanje" name="Trajanje" placeholder="Trajanje"> <br>
+                </div>
+                <div>
+                    Prostorija <br> <input type="text" id="Prostorija" name="Prostorija" placeholder="Prostorija"> <br>
+                </div>
+                <div>
+                    Predmet ID <br> <input type="text" id="Predmet" name="Predmet" placeholder="Predmet"> <br>
+                </div>
+                <br>
+                <button border-top="10px" type="submit" class="btn btn-primary">Kreiraj</button>
+        
+            </form>
+            </div>
+        </div></div></div>
+        
+        
+        </body>
+
+</html>

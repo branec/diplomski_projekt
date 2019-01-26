@@ -163,16 +163,34 @@ exports.new_exam = function (req, res) {
         var duration = req.body.Trajanje;
         var room = req.body.Prostorija;
         var subject = req.body.Predmet;
-        var query=`INSERT INTO Ispit (Naziv,VrijemeOd,VrijemeDo,Trajanje,Prostorija,Predmet) VALUES (${name},${from},${to},${duration},${room},${subject})`;
-        request.query(query,function(err, recordset) {
-            if(err)
-            res.send(err);
 
-            if(recordset.recordset[0].postoji === 1){
-                res.send(200)
-            }else{
-                res.json({odgovor:"false"})
+        let canUpdate = true
+          Object.keys(req.body).forEach(row => {
+            if(req.body[row] === "") {
+                res.status(400)
+                res.send(row + " is missing")
+                sql.close();
+                canUpdate = false
             }
+            })
+            if(!canUpdate) return
+
+
+        var query=`INSERT INTO Ispit (Naziv,VrijemeOd,VrijemeDo,Trajanje,Prostorija,PredmetId) VALUES ('${name}','${from}','${to}','${duration}','${room}','${subject}')`;
+        console.log(req.body, query)
+       
+          request.query(query, function(err, recordset) {
+                if (err) {
+                    sql.close();
+                    res.send(err);
+                    return;
+                  }
+    
+                if(recordset.rowsAffected.length === 1){
+                  res.redirect("/predmeti")
+                }else{
+                  res.json({odgovor:"false"})
+                }
 
             sql.close();
         });

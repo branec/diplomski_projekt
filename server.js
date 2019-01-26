@@ -424,6 +424,15 @@ app.get('/subjects/newSubject', (req, res) => {
     res.render('noviPredmet', { zavod: department, korisnik: user.Id });
 });
 
+app.get('/exams/newExam', (req, res) => {
+    var user = getUser(req.query.user);
+    if(!user) {
+        res.redirect('/login');
+    }
+    res.render('noviIspit');
+});
+
+
 app.get('/subject/updateSubject', (req, res) => {
     var department = req.query.department;
     var predmet = req.query.Id;
