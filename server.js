@@ -286,6 +286,7 @@ app.get('/prof_dash', (req, res) => {
             res.redirect('/login');
             return;
         }
+        sql.close();
         global.sql.connect(global.sqlConfig, function() {
             var request = new sql.Request();
             var query = `select * from PREDMET join ZAVOD on Predmet.ZavodID=ZAVOD.Id where Predmet.KorisnikId = ${user.Id}`;
