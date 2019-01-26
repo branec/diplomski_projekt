@@ -328,11 +328,12 @@ exports.get_users_by_subject = function (req, res) {
   global.sql.connect(global.sqlConfig, function() {
     var request = new sql.Request();
     var predmet = req.params.subject; 
+  
     var query = 'select Korisnik.* FROM Korisnik ' +
                 'LEFT OUTER JOIN KorisnikPredmet ON KorisnikPredmet.KorisnikId = Korisnik.ID ' +
                 'LEFT OUTER JOIN PREDMET ON PREDMET.ID = KorisnikPredmet.PredmetId ' +
                  `WHERE Predmet.Id = ${predmet}`;
-
+  console.log(predmet,query);
     request.query(query, function(err, recordset) {
         if (err)
         res.send(err);

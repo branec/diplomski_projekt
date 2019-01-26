@@ -64,6 +64,9 @@ module.exports = function(app) {
     app.route('/usersbyprof/:prof')
     .get(users.get_users_by_prof);
 
+    app.route('/users/newUserPredmet')
+    .post(exams.newUserPredmet);
+
     app.route('/exams/newExam')
     .post(exams.new_exam);
 

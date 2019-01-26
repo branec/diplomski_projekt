@@ -196,6 +196,47 @@ exports.new_exam = function (req, res) {
         });
     });
 }
+
+exports.newUserPredmet = function (req, res) {
+    global.sql.connect(global.sqlConfig, function() {
+        var request = new sql.Request();
+
+        var korisnik = req.body.KorisnikId;
+        var predmet = req.body.PredmetId;
+        
+        let canUpdate = true
+          Object.keys(req.body).forEach(row => {
+            if(req.body[row] === "") {
+                res.status(400)
+                res.send(row + " is missing")
+                sql.close();
+                canUpdate = false
+            }
+            })
+            if(!canUpdate) return
+
+
+        var query=`INSERT INTO KorisnikPredmet (KorisnikId,PredmetId) VALUES ('${korisnik}','${predmet}')`;
+        console.log(req.body, query)
+       
+          request.query(query, function(err, recordset) {
+                if (err) {
+                    sql.close();
+                    res.send(err);
+                    return;
+                  }
+    
+                if(recordset.rowsAffected.length === 1){
+                  res.redirect("/predmeti")
+                }else{
+                  res.json({odgovor:"false"})
+                }
+
+            sql.close();
+        });
+    });
+}
+
 /**
  * 
  * @api {put} /exams/updateExam Updates existing exam.

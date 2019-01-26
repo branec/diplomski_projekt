@@ -443,6 +443,16 @@ app.get('/subject/updateSubject', (req, res) => {
     res.render('updatePredmet', { predmet: predmet, zavod: department, korisnik: user.Id });
 });
 
+app.get('/users/newUserPredmet', (req, res) => {
+    
+    var predmet = req.query.Id;
+    var user = getUser(req.query.user);
+    if(!user) {
+        res.redirect('/login');
+    }
+    res.render('noviUserPredmet', { predmet: predmet});
+});
+
 app.get('/updateUser', (req, res) => {
     var department = req.query.department;
     var id = req.query.Id;
