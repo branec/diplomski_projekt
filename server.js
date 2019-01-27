@@ -246,6 +246,70 @@ app.get('/uvid_student/:exam/:user', (req, res) => {
     });
 });
 
+app.get('/statistika/', (req, res) => {
+    var user = getUser(req.query.user);
+    if(user && user.TipId === 2) {
+        global.sql.connect(global.sqlConfig, function() {
+            var request = new sql.Request();
+            var query = `select Predmet.Naziv as predmet, Ispit.Naziv as ispit, Ispit.Id as id FROM Predmet Join Ispit On Ispit.PredmetId = Predmet.Id WHERE Predmet.KorisnikId = ${user.Id}`;
+            request.query(query, function(err, recordset) {
+                if (err) {
+                      sql.close();
+                      res.send(err);
+                  }
+                var predmeti = (recordset.recordset);
+                sql.close();
+                res.render('statistika', {predmeti:predmeti, korisnik:user});
+            });
+        });
+    }
+});
+
+app.get('/statistika/:ispit', (req, res) => {
+    var ispit = req.params.ispit;
+    var user = getUser(req.query.user);
+    if(ispit && user && user.TipId === 2) {
+        global.sql.connect(global.sqlConfig, function() {
+            var request = new sql.Request();
+            var query = `select Bodovi.* from Kosuljica join Bodovi on Kosuljica.Id = Bodovi.KosuljicaId where Kosuljica.IspitID = ${user.Id} order by Bodovi.Zadatak asc`;
+            request.query(query, function(err, recordset) {
+                if (err) {
+                      sql.close();
+                      res.send(err);
+                  }
+                var bodovi = (recordset.recordset);
+                sql.close();
+                
+                var tempStatistika = [];
+                var statistika = [];
+                tempStatistika.push({ zadatak: 0, bodovi: 0, n: 0});
+                for(var i=0 ; i < bodovi.length ; i++ ) {
+                    tempStatistika[0].bodovi += bodovi[i].Bodovi;
+                    tempStatistika[0].n += 1;
+
+                    var index = tempStatistika.findIndex(x => x.zadatak === bodovi[i].Zadatak)
+                    if(index === -1) {
+                        tempStatistika.push({ zadatak: bodovi[i].Zadatak, bodovi: bodovi[i].Bodovi, n: 1 });
+                    }
+                    else {
+                        tempStatistika[index].bodovi += bodovi[i].Bodovi;
+                        tempStatistika[index].n += 1;
+                    }
+                }
+                for(var i=0 ; i < tempStatistika.length ; i++ ) {
+                    var row = {
+                        zadatak: tempStatistika[i].zadatak,
+                        bodovi: tempStatistika[i].bodovi / tempStatistika[i].n
+                    }
+                    statistika.push(row);
+                }
+
+                res.render('statistikaIspita', {statistika: statistika, korisnik: user});
+            });
+        });
+    }
+});
+
 app.get('/prof_dash', (req, res) => {
     if (req.session.user && req.cookies.user_sid) {
         var user = getUser(req.query.user);

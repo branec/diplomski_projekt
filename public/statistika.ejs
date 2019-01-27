@@ -65,36 +65,19 @@
 
     </div>
     <div class="table-content">
-        <ul>
-            <li>
-            <a href="/subjects/newSubject" >Dodaj novi predmet</a>
-        </li>
-        <li>
-            <a href="/exams/newExam" >Dodaj novi ispit</a>
-        </li>
-        </ul>
-        <h2>Popis svih predmeta:</h2>
+        <h2>Vlastiti predmeti:</h2>
         <table class="table">
             <th></th>
-            <th>Naziv</th>
-            <th>Zavod</th>
+            <th>Predmet</th>
+            <th>Ispit</th>
 
             <%for (i=0; i<predmeti.length; i++){%>
                 <tr>
                     <td><%= i+1 %>.</td>
-                    <td> <a href='/prof_ispiti?user=<%=korisnik.KorisnickoIme%>&exam=<%=predmeti[i].Id[0]%>'><%= predmeti[i].Naziv[0] %></td>
-                    <td> <a href='/department/<%=predmeti[i].Id[1]%>?user=<%=korisnik.KorisnickoIme%>'><%= predmeti[i].Naziv[1] %></td>
+                    <td><%= predmeti[i].predmet %></td>
+                    <td><%= predmeti[i].ispit %></td>
                     <td>
-                            <a href="/users/newUserPredmet?Id=<%=predmeti[i].Id[0]%>">Dodaj studenta na predmet</a>
-                    </td>
-                    <td>
-                        <a class="button" href="/subject/updateSubject?Id=<%=predmeti[i].Id[0]%>">Azuriraj</a>
-                    </td>
-                    <td>
-                        <form method="POST" action="/subject/deleteSubject">
-                            <input type="hidden" name="id" value="<%= predmeti[i].Id[0] %>" />
-                            <button type="submit">Delete</button>
-                        </form>
+                        <a class="button" href="/statistika/<%=predmeti[i].id%>?user=<%=korisnik.KorisnickoIme%>">Statistika</a>
                     </td>
                 </tr>
             <% } %>
@@ -120,7 +103,3 @@
 </body>
 
 </html>
-
-
-
-

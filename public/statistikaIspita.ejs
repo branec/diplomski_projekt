@@ -65,42 +65,25 @@
 
     </div>
     <div class="table-content">
-        <ul>
-            <li>
-            <a href="/subjects/newSubject" >Dodaj novi predmet</a>
-        </li>
-        <li>
-            <a href="/exams/newExam" >Dodaj novi ispit</a>
-        </li>
-        </ul>
-        <h2>Popis svih predmeta:</h2>
-        <table class="table">
-            <th></th>
-            <th>Naziv</th>
-            <th>Zavod</th>
+        <h2>Statistika Ispita</h2>
+        <% if(statistika.length === 1) {%>
+            Nema podataka
+        <%} else {%>
+            <table class="table">
+                <th>Zadatak</th>
+                <th>Prosjek bodova</th>
 
-            <%for (i=0; i<predmeti.length; i++){%>
-                <tr>
-                    <td><%= i+1 %>.</td>
-                    <td> <a href='/prof_ispiti?user=<%=korisnik.KorisnickoIme%>&exam=<%=predmeti[i].Id[0]%>'><%= predmeti[i].Naziv[0] %></td>
-                    <td> <a href='/department/<%=predmeti[i].Id[1]%>?user=<%=korisnik.KorisnickoIme%>'><%= predmeti[i].Naziv[1] %></td>
-                    <td>
-                            <a href="/users/newUserPredmet?Id=<%=predmeti[i].Id[0]%>">Dodaj studenta na predmet</a>
-                    </td>
-                    <td>
-                        <a class="button" href="/subject/updateSubject?Id=<%=predmeti[i].Id[0]%>">Azuriraj</a>
-                    </td>
-                    <td>
-                        <form method="POST" action="/subject/deleteSubject">
-                            <input type="hidden" name="id" value="<%= predmeti[i].Id[0] %>" />
-                            <button type="submit">Delete</button>
-                        </form>
-                    </td>
-                </tr>
-            <% } %>
-        </table>
-
+                <%for (i=1; i<statistika.length; i++){%>
+                    <tr>
+                        <td><%= statistika[i].zadatak %></td>
+                        <td><%= statistika[i].bodovi %></td>
+                    </tr>
+                <% } %>
+            </table>
+            Ukupan prosjek: <%= statistika[0].bodovi %>
+        <%}%>
     </div>
+    
     <!-- /#wrapper -->
 
     <!-- Bootstrap core JavaScript -->
@@ -120,7 +103,3 @@
 </body>
 
 </html>
-
-
-
-
