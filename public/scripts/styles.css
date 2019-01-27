@@ -185,6 +185,11 @@ table td:not(:first-child) {
 th{
   letter-spacing: 1px;
 }
+.button-main{
+  border:1px solid black; 
+  border-radius:10px; 
+  padding:10px 20px;
+}
 @media (min-width: 700px) and (max-width: 1100px) {
   header ul {
     padding:20px 15px;
