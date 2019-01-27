@@ -63,7 +63,7 @@ var sessionChecker = (req, res, next) => {
       } else if(user.TipId === 1) {
           res.redirect(`/dashboard?user=${user.KorisnickoIme}`);
       } else {
-          res.redirect(`/prof_dash?user=${user.KorisnickoIme}`);
+          //res.redirect(`/prof_dash?user=${user.KorisnickoIme}`);
       }
   } else {
       next();
@@ -472,6 +472,30 @@ app.get('/logout', (req, res) => {
       res.redirect('/login');
   }
 });
+
+
+app.get('/bodovi', (req, res) => {
+  var sheet = req.query.sheet;
+  var bodovi = req.query.bodovi;
+  var zadatak = req.query.zadatak;
+
+  global.sql.connect(global.sqlConfig, function() {
+    var request = new sql.Request();
+    var query = `INSERT INTO Bodovi(Bodovi, KosuljicaId,Zadatak) VALUES (${bodovi}, ${sheet}, ${zadatak});`;
+    request.query(query, function(err, recordset) {
+        if (err) {
+              sql.close();
+              res.send(err);
+          }
+ 
+        sql.close();
+    
+    });
+});
+
+
+
+  });
 
 /*handling pictures*/
 const upload = multer({

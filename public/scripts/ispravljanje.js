@@ -69,6 +69,7 @@ $('#ispravi-button').click(function(){
         var qrkod = data.kosuljica.Qrkod;
         var kosuljica = document.getElementById("sheet-id");
         kosuljica.innerText = qrkod;
+        kosuljica.setAttribute("value",data.kosuljica.Id);
         var images = document.getElementById("canvas-images-ispravljanje");
 var brojac = 0;
 
@@ -225,3 +226,25 @@ function redraw(){
     
     
    }); 
+
+
+
+ 
+   $("#spremi-bodove").click(function() {
+    const zadatak = $( "#zadatak" ).val();
+    var bodovi = $( "#bodovi" ).val();
+    var kosuljica = $("#sheet-id").attr("value");
+
+
+    $.ajax({
+        url: "http://localhost:3000/bodovi?bodovi="+ bodovi + "&zadatak=" + zadatak + "&sheet=" + kosuljica ,
+        type: "GET",
+        processData: false,
+        contentType: false,
+     }).done(function(respond){
+        alert("Bodovi upisani!");
+     });
+
+
+   });
+
