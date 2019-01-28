@@ -70,13 +70,15 @@
             <th></th>
             <th>Predmet</th>
             <th>Ispit</th>
+            <th>Prosjek riješenosti</th>
+            <th>Broj studenata</th>
 
             <%for (i=0; i<predmeti.length; i++){%>
                 <tr>
                     <td><%= i+1 %>.</td>
                     <td><%= predmeti[i].nazivPredmeta %></td>
                     <td><%= predmeti[i].nazivIspita %></td>
-                    <td><%= predmeti[i].avgBodovi %></td>
+                    <td><%= predmeti[i].avgBodovi*100 %>%</td>
                     <td><%= predmeti[i].brStudenata %></td>
 
                     <td>
