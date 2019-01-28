@@ -251,7 +251,14 @@ app.get('/statistika/', (req, res) => {
     if(user && user.TipId === 2) {
         global.sql.connect(global.sqlConfig, function() {
             var request = new sql.Request();
-            var query = `select Predmet.Naziv as predmet, Ispit.Naziv as ispit, Ispit.Id as id FROM Predmet Join Ispit On Ispit.PredmetId = Predmet.Id WHERE Predmet.KorisnikId = ${user.Id}`;
+            var query = `SELECT Ispit.Id, Predmet.Naziv as nazivPredmeta, Ispit.Naziv as nazivIspita, SUM(Bodovi.Bodovi)/SUM(Bodovi.max_bodovi) as avgBodovi, COUNT(Distinct Korisnik.Id) as brStudenata
+            from Kosuljica JOIN Korisnik ON (Kosuljica.KorisnikId = Korisnik.Id)
+            join KorisnikPredmet ON (KorisnikPredmet.KorisnikId = Korisnik.Id)
+            JOIN Predmet ON (KorisnikPredmet.PredmetId = predmet.Id)
+            JOIN Ispit ON (Ispit.PredmetId = PREDMET.ID)
+            JOIN Bodovi ON Bodovi.KosuljicaId = Kosuljica.Id
+            where Kosuljica.IspitID = Ispit.ID
+            group by Ispit.Id,  Predmet.Naziv, Ispit.Naziv`;
             request.query(query, function(err, recordset) {
                 if (err) {
                       sql.close();
@@ -271,7 +278,7 @@ app.get('/statistika/:ispit', (req, res) => {
     if(ispit && user && user.TipId === 2) {
         global.sql.connect(global.sqlConfig, function() {
             var request = new sql.Request();
-            var query = `select Bodovi.* from Kosuljica join Bodovi on Kosuljica.Id = Bodovi.KosuljicaId where Kosuljica.IspitID = ${user.Id} order by Bodovi.Zadatak asc`;
+            var query = `select Bodovi.* from Kosuljica join Bodovi on Kosuljica.Id = Bodovi.KosuljicaId order by Bodovi.Zadatak asc`;
             request.query(query, function(err, recordset) {
                 if (err) {
                       sql.close();
