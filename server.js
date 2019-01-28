@@ -350,6 +350,40 @@ app.get('/prof_dash', (req, res) => {
             }); });
     });
 
+    app.get('/prof_ispravljeni_ispiti', (req, res) => {
+        var user = getUser(req.query.user);
+        if(!user || user.TipId === 1) {
+            req.session.user = undefined;
+            res.redirect('/login');
+            return;
+        }
+        sql.close();
+        global.sql.connect(global.sqlConfig, function() {
+            var request = new sql.Request();
+            var query = `SELECT Ispit.Id, CONCAT(korisnik.Ime, ' ', Korisnik.Prezime) as korisnik, Predmet.Naziv as nazivPredmeta, Ispit.Naziv as nazivIspita, SUM(Bodovi.Bodovi) as bodovi, SUM(Bodovi.max_bodovi) as max
+            from Kosuljica JOIN Korisnik ON (Kosuljica.KorisnikId = Korisnik.Id)
+            join KorisnikPredmet ON (KorisnikPredmet.KorisnikId = Korisnik.Id)
+            JOIN Predmet ON (KorisnikPredmet.PredmetId = predmet.Id)
+            JOIN Ispit ON (Ispit.PredmetId = PREDMET.ID)
+            JOIN Bodovi ON Bodovi.KosuljicaId = Kosuljica.Id
+            where Predmet.KorisnikId = ${user.Id}
+            AND Kosuljica.IspitID = Ispit.ID
+            group by Ispit.Id, CONCAT(korisnik.Ime, ' ', Korisnik.Prezime), Predmet.Naziv, Ispit.Naziv`;
+            request.query(query, function(err, recordset) {
+                if (err) {
+                      sql.close();
+                      res.send(err);
+                }
+                var predmet = recordset.recordset;
+                sql.close();
+                console.log(predmet);
+
+                
+                res.render('prof_ispravljeni_ispiti', {predmeti:predmet, korisnik:user});
+            });
+        });         
+    });
+    
     app.get('/predmeti', (req, res) => {
         var user = getUser(req.query.user);
         if(!user || user.TipId === 1) {

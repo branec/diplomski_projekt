@@ -23,7 +23,7 @@
             <li>|</li>
             <a id="ispravljanje">Ispravljanje</a>
             <li>|</li>
-            <a href="prof_ispravljeni_ispiti">Ispravljeni ispiti</a>
+            <a href="/prof_ispravljeni_ispiti">Ispravljeni ispiti</a>
             <li>|</li>
             <a id="studenti">Studenti</a>
             <li>|</li>
@@ -64,13 +64,38 @@
   
 
     </div>
-    <div class="welcome-text">
-            <h2 style="font-size:40px">Dobrodošli natrag!</h2>
-                <div class="center-activity">
-                <h2 style="font-size:50px;"><span style="font-size:20px; padding-right:5%;">Ispravljeno </span>55 | 106 <span style="font-size:30px;padding-left:5%;">Ukupno</span></h2>
-                </div>
-                <div style="text-align:center;margin-top:5%;"><a class="button-main" href="/ispravljanje?user=prof">Nastavite ispravljati</a></div>      
-    </div>
+
+    <div class="table-content">
+        <h2>Popis ispravljenih ispita:</h2>
+        <!--<select class="izbornik-predmeti">
+            <option>Svi ispiti</option>
+            <option>Diplomski projekt</option>
+            <option>MIS</option>
+        </select>-->
+        <table class="table">
+           
+                    <th></th>
+                    <th>Student</th>
+                    <th>Predmet</th>
+                    <th>Ispit</th>
+                    <th>Bodovi</th>
+                    <th></th>
+                    <th></th>
+            
+                    <%for (i=0; i<predmeti.length; i++){%>
+                        <tr>
+                            <td><%= i+1 %>.</td>
+                            <td> <%= predmeti[i].korisnik %></td>
+                            <td><%= predmeti[i].nazivPredmeta %></td>
+                            <td><%= predmeti[i].nazivIspita %></td>
+                            <td><%= predmeti[i].bodovi %> /  <%= predmeti[i].max %></td>
+                            <td><a >Korigiraj</a></td>
+                        </tr>
+                    <% } %>
+
+           
+        </table>
+
     <!-- /#wrapper -->
 
     <!-- Bootstrap core JavaScript -->
