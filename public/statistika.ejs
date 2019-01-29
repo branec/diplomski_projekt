@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -11,7 +12,9 @@
     <link href="/scripts/styles.css" rel="stylesheet">
 
 </head>
+
 <body>
+
     <header>
         <div class="header-middle-prof">
         <ul class="header-navigation">
@@ -39,67 +42,60 @@
                     </a>
                 </li>
                 <li>
-                    <a href="/predmeti">Ispravljanje</a>
+                    <a href="/predmeti">Predmeti</a>
                 </li>
                 <li>
-                    <a href="/ispiti">Ispravljeni ispiti</a>
+                    <a href="/ispiti">Ispiti</a>
                 </li>
                 <li>
-                    <a href="/ispiti">Statistika</a>
+                    <a href="/studenti">Studenti</a>
                 </li>
                 <li>
                     <a href="/logout">Odjava</a>
                 </li>
             </ul>
         </div>
+
+        <div id="page-content-wrapper">
+            <div class="container-fluid">
+                <a href="#menu-toggle" class="btn btn-secondary" id="menu-toggle"><img width="30px" src="images/ham-meni.png" /></a>
+            </div>
+        </div>
+  
+
     </div>
-
-    <div id="main-wrapper" class="mx-auto" style="width: 800px;">
-
-    <h2>Ispti</h2>
-    <table id="prof_ispiti" class="table m-1">
-        <thead>
-            <th>R.br.</th>
-            <th>Naziv</th>
-            <th>Vrijeme pocetka</th>
-            <th>Vrijeme zavrsetka</th>
-            <th>Prostorija</th>
-            <th>Trajanje</th>
-
-        </thead>
-        <tbody id="prof_ispiti_table">
-
-
-
-        </tbody>
-    </table>
-
-    <h2>Studenti na predmetu</h2>
-    
-<table id="prof_studenti" class="table" style="width: 400px;margin: auto;">
-        <thead>
-
-        </thead>
-        <tbody id="prof_studenti_table">
-
+    <div class="table-content">
+        <h2>Vlastiti predmeti:</h2>
+        <table class="table">
             <th></th>
-            <th>JMBAG</th>
-            <th>Ime</th>
-            <th>Prezime</th>
+            <th>Predmet</th>
+            <th>Ispit</th>
+            <th>Prosjek riješenosti</th>
+            <th>Broj studenata</th>
 
-        </tbody>
-    </table>
+            <%for (i=0; i<predmeti.length; i++){%>
+                <tr>
+                    <td><%= i+1 %>.</td>
+                    <td><%= predmeti[i].nazivPredmeta %></td>
+                    <td><%= predmeti[i].nazivIspita %></td>
+                    <td><%= predmeti[i].avgBodovi*100 %>%</td>
+                    <td><%= predmeti[i].brStudenata %></td>
 
+                    <td>
+                        <a class="button" href="/statistika/<%=predmeti[i].id%>?user=<%=korisnik.KorisnickoIme%>">Statistika</a>
+                    </td>
+                </tr>
+            <% } %>
+        </table>
 
     </div>
-    
     <!-- /#wrapper -->
 
     <!-- Bootstrap core JavaScript -->
     <script src="/scripts/vendor/jquery/jquery.min.js"></script>
     <script src="/scripts/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="scripts/prof_ispiti.js"></script>
     <script src="scripts/headerProf.js"></script>
+
     <!-- Menu Toggle Script -->
     <script>
     $("#menu-toggle").click(function(e) {

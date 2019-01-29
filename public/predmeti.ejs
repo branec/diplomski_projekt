@@ -23,7 +23,7 @@
             <li>|</li>
             <a id="ispravljanje">Ispravljanje</a>
             <li>|</li>
-            <a id="ispravljeni">Ispravljeni ispiti</a>
+            <a href="prof_ispravljeni_ispiti">Ispravljeni ispiti</a>
             <li>|</li>
             <a id="studenti">Studenti</a>
             <li>|</li>
@@ -69,9 +69,6 @@
             <li>
             <a href="/subjects/newSubject" >Dodaj novi predmet</a>
         </li>
-        <li>
-            <a href="/exams/newExam" >Dodaj novi ispit</a>
-        </li>
         </ul>
         <h2>Popis svih predmeta:</h2>
         <table class="table">
@@ -88,7 +85,10 @@
                             <a href="/users/newUserPredmet?Id=<%=predmeti[i].Id[0]%>">Dodaj studenta na predmet</a>
                     </td>
                     <td>
-                        <a class="button" href="/subject/updateSubject?Id=<%=predmeti[i].Id[0]%>">Update</a>
+                            <a href="/exams/newExam?Id=<%=predmeti[i].Id[0]%>" >Dodaj novi ispit na predmet</a>
+                    </td>
+                    <td>
+                        <a class="button" href="/subject/updateSubject?Id=<%=predmeti[i].Id[0]%>">Azuriraj predmet</a>
                     </td>
                     <td>
                         <form method="POST" action="/subject/deleteSubject">

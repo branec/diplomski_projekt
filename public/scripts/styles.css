@@ -89,9 +89,9 @@ header ul > li {
   display: inline-block;
   width:15%;
 }
-.header-middle-prof > ul> li{
+.header-middle-prof > ul> li:not(:first-child){
   display: inline-block;
-  width:10%;
+  width:4%;
 }
 header ul > li > img{
   width:100%;
@@ -206,6 +206,9 @@ th{
     width:100%;
     max-width:50px;
   }
+  .header-middle-prof > ul> li:not(:first-child){
+    width:4%;
+  }
 }
 
 @media (min-width: 1100px) and (max-width: 1220px) {
@@ -219,8 +222,11 @@ th{
     width:100%;
     max-width:60px;
   }
-  header ul > li:nth-child(odd):not(:first-child){
+  header ul > li:not(:first-child){
     width:9%;
+  }
+  .header-middle-prof > ul> li:not(:first-child){
+    width:4%;
   }
 }
 
@@ -238,6 +244,9 @@ th{
     font-size: 15px;
     text-transform: uppercase;
   }
+  .header-middle-prof > ul> li:not(:first-child){
+    width:4%;
+  }
 }
 
 @media (min-width: 600px) and (max-width: 950px) {
@@ -254,6 +263,9 @@ th{
     padding:20px 10px;
     font-size: 13px;
     text-transform: uppercase;
+  }
+  .header-middle-prof > ul> li:not(:first-child){
+    width:4%;
   }
 }
 

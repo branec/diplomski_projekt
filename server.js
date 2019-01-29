@@ -246,6 +246,77 @@ app.get('/uvid_student/:exam/:user', (req, res) => {
     });
 });
 
+app.get('/statistika/', (req, res) => {
+    var user = getUser(req.query.user);
+    if(user && user.TipId === 2) {
+        global.sql.connect(global.sqlConfig, function() {
+            var request = new sql.Request();
+            var query = `SELECT Ispit.Id, Predmet.Naziv as nazivPredmeta, Ispit.Naziv as nazivIspita, SUM(Bodovi.Bodovi)/SUM(Bodovi.max_bodovi) as avgBodovi, COUNT(Distinct Korisnik.Id) as brStudenata
+            from Kosuljica JOIN Korisnik ON (Kosuljica.KorisnikId = Korisnik.Id)
+            join KorisnikPredmet ON (KorisnikPredmet.KorisnikId = Korisnik.Id)
+            JOIN Predmet ON (KorisnikPredmet.PredmetId = predmet.Id)
+            JOIN Ispit ON (Ispit.PredmetId = PREDMET.ID)
+            JOIN Bodovi ON Bodovi.KosuljicaId = Kosuljica.Id
+            where Kosuljica.IspitID = Ispit.ID
+            group by Ispit.Id,  Predmet.Naziv, Ispit.Naziv`;
+            request.query(query, function(err, recordset) {
+                if (err) {
+                      sql.close();
+                      res.send(err);
+                  }
+                var predmeti = (recordset.recordset);
+                sql.close();
+                res.render('statistika', {predmeti:predmeti, korisnik:user});
+            });
+        });
+    }
+});
+
+app.get('/statistika/:ispit', (req, res) => {
+    var ispit = req.params.ispit;
+    var user = getUser(req.query.user);
+    if(ispit && user && user.TipId === 2) {
+        global.sql.connect(global.sqlConfig, function() {
+            var request = new sql.Request();
+            var query = `select Bodovi.* from Kosuljica join Bodovi on Kosuljica.Id = Bodovi.KosuljicaId order by Bodovi.Zadatak asc`;
+            request.query(query, function(err, recordset) {
+                if (err) {
+                      sql.close();
+                      res.send(err);
+                  }
+                var bodovi = (recordset.recordset);
+                sql.close();
+                
+                var tempStatistika = [];
+                var statistika = [];
+                tempStatistika.push({ zadatak: 0, bodovi: 0, n: 0});
+                for(var i=0 ; i < bodovi.length ; i++ ) {
+                    tempStatistika[0].bodovi += bodovi[i].Bodovi;
+                    tempStatistika[0].n += 1;
+
+                    var index = tempStatistika.findIndex(x => x.zadatak === bodovi[i].Zadatak)
+                    if(index === -1) {
+                        tempStatistika.push({ zadatak: bodovi[i].Zadatak, bodovi: bodovi[i].Bodovi, n: 1 });
+                    }
+                    else {
+                        tempStatistika[index].bodovi += bodovi[i].Bodovi;
+                        tempStatistika[index].n += 1;
+                    }
+                }
+                for(var i=0 ; i < tempStatistika.length ; i++ ) {
+                    var row = {
+                        zadatak: tempStatistika[i].zadatak,
+                        bodovi: tempStatistika[i].bodovi / tempStatistika[i].n
+                    }
+                    statistika.push(row);
+                }
+
+                res.render('statistikaIspita', {statistika: statistika, korisnik: user});
+            });
+        });
+    }
+});
+
 app.get('/prof_dash', (req, res) => {
     if (req.session.user && req.cookies.user_sid) {
         var user = getUser(req.query.user);
@@ -279,6 +350,40 @@ app.get('/prof_dash', (req, res) => {
             }); });
     });
 
+    app.get('/prof_ispravljeni_ispiti', (req, res) => {
+        var user = getUser(req.query.user);
+        if(!user || user.TipId === 1) {
+            req.session.user = undefined;
+            res.redirect('/login');
+            return;
+        }
+        sql.close();
+        global.sql.connect(global.sqlConfig, function() {
+            var request = new sql.Request();
+            var query = `SELECT Ispit.Id, CONCAT(korisnik.Ime, ' ', Korisnik.Prezime) as korisnik, Predmet.Naziv as nazivPredmeta, Ispit.Naziv as nazivIspita, SUM(Bodovi.Bodovi) as bodovi, SUM(Bodovi.max_bodovi) as max
+            from Kosuljica JOIN Korisnik ON (Kosuljica.KorisnikId = Korisnik.Id)
+            join KorisnikPredmet ON (KorisnikPredmet.KorisnikId = Korisnik.Id)
+            JOIN Predmet ON (KorisnikPredmet.PredmetId = predmet.Id)
+            JOIN Ispit ON (Ispit.PredmetId = PREDMET.ID)
+            JOIN Bodovi ON Bodovi.KosuljicaId = Kosuljica.Id
+            where Predmet.KorisnikId = ${user.Id}
+            AND Kosuljica.IspitID = Ispit.ID
+            group by Ispit.Id, CONCAT(korisnik.Ime, ' ', Korisnik.Prezime), Predmet.Naziv, Ispit.Naziv`;
+            request.query(query, function(err, recordset) {
+                if (err) {
+                      sql.close();
+                      res.send(err);
+                }
+                var predmet = recordset.recordset;
+                sql.close();
+                console.log(predmet);
+
+                
+                res.render('prof_ispravljeni_ispiti', {predmeti:predmet, korisnik:user});
+            });
+        });         
+    });
+    
     app.get('/predmeti', (req, res) => {
         var user = getUser(req.query.user);
         if(!user || user.TipId === 1) {
@@ -426,11 +531,12 @@ app.get('/subjects/newSubject', (req, res) => {
 });
 
 app.get('/exams/newExam', (req, res) => {
+    var predmet = req.query.Id;
     var user = getUser(req.query.user);
     if(!user) {
         res.redirect('/login');
     }
-    res.render('noviIspit');
+    res.render('noviIspit', { predmet: predmet});
 });
 
 
