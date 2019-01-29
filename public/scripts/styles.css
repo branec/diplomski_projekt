@@ -61,6 +61,7 @@ header a:hover{
   height: 50px;
   line-height: 50px;
   padding: 0;
+  content: auto;
 }
 .forgot {
   text-align: left; margin-bottom:30px;

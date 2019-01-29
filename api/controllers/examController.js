@@ -158,9 +158,28 @@ exports.new_exam = function (req, res) {
         var request = new sql.Request();
 
         var name = req.body.Naziv;
-        var from = req.body.VrijemeOd;
-        var to = req.body.VrijemeDo;
+        var from = new Date(req.body.VrijemeOd);
+        //var from = req.body.VrijemeOd;
+        console.log(from);
         var duration = req.body.Trajanje;
+        var to = new Date();
+        to.setTime(from.getTime() + (duration * 60 * 1000));
+        //var to = req.body.VrijemeOd + duration;
+        console.log(to);
+        from = from.getUTCFullYear() + '-' +
+        ('00' + (from.getUTCMonth()+1)).slice(-2) + '-' +
+        ('00' + from.getUTCDate()).slice(-2) + ' ' + 
+        ('00' + from.getUTCHours()).slice(-2) + ':' + 
+        ('00' + from.getUTCMinutes()).slice(-2) + ':' + 
+        ('00' + from.getUTCSeconds()).slice(-2);
+
+        to = to.getUTCFullYear() + '-' +
+        ('00' + (to.getUTCMonth()+1)).slice(-2) + '-' +
+        ('00' + to.getUTCDate()).slice(-2) + ' ' + 
+        ('00' + to.getUTCHours()).slice(-2) + ':' + 
+        ('00' + to.getUTCMinutes()).slice(-2) + ':' + 
+        ('00' + to.getUTCSeconds()).slice(-2);
+
         var room = req.body.Prostorija;
         var subject = req.body.Predmet;
 
