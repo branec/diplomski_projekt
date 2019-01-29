@@ -25,12 +25,24 @@ data.forEach(exam => {
 
   var td4 = document.createElement("td");
   var d0 = new Date(exam.VrijemeOd);
-  td4.innerText = d0.toLocaleDateString().replace('/',".").replace('/',".");
+  d0 = d0.getUTCFullYear() + '-' +
+    ('00' + (d0.getUTCMonth()+1)).slice(-2) + '-' +
+    ('00' + d0.getUTCDate()).slice(-2) + ' ' + 
+    ('00' + d0.getUTCHours()).slice(-2) + ':' + 
+    ('00' + d0.getUTCMinutes()).slice(-2) + ':' + 
+    ('00' + d0.getUTCSeconds()).slice(-2);
+  td4.innerText = d0;
   red.appendChild(td4);
 
   var td5 = document.createElement("td");
   var d = new Date(exam.VrijemeDo);
-  td5.innerText = d.toLocaleDateString().replace('/',".").replace('/',".");
+  d = d.getUTCFullYear() + '-' +
+    ('00' + (d.getUTCMonth()+1)).slice(-2) + '-' +
+    ('00' + d.getUTCDate()).slice(-2) + ' ' + 
+    ('00' + d.getUTCHours()).slice(-2) + ':' + 
+    ('00' + d.getUTCMinutes()).slice(-2) + ':' + 
+    ('00' + d.getUTCSeconds()).slice(-2);
+  td5.innerText = d;
   red.appendChild(td5);
 
   var td6 = document.createElement("td");
