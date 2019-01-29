@@ -13,29 +13,42 @@
 
 </head>
 
-<body >
+<body>
 
     <header>
-        <div class="header-middle">
+        <div class="header-middle-prof">
         <ul class="header-navigation">
             <li><img src="/images/fer_logo.PNG" /></li>
-            <a id="header-scanner" >Dodaj novi ispit</a>
+            <a id="predmeti" id="predmeti">Predmeti</a>
             <li>|</li>
-            <a  id="header-ispiti">Pregled rezultata</a>
+            <a id="ispravljanje">Ispravljanje</a>
             <li>|</li>
-            <a href="/logout">Odjava</a>
+            <a id="ispravljeni">Ispravljeni ispiti</a>
+            <li>|</li>
+            <a id="studenti">Studenti</a>
+            <li>|</li>
+            <a id="statistika">Statistika</a>
+            <li>|</li>
+            <li><a href="/logout">Odjava</a></li>
         </ul>
         </div>
     </header>
     <div id="wrapper">
         <div id="sidebar-wrapper">
             <ul class="sidebar-nav">
-               
-                <li>
-                    <a href="/predmeti">Dodaj novi ispit</a>
+                <li class="sidebar-brand">
+                    <a href="#">
+                        Naslovnica
+                    </a>
                 </li>
                 <li>
-                    <a href="/ispiti">Rezultati</a>
+                    <a id="predmeti">Predmeti</a>
+                </li>
+                <li>
+                    <a id="ispravljanje">Ispravljanje</a>
+                </li>
+                <li>
+                    <a id="ispravljeni">Ispravljeni ispiti</a>
                 </li>
                 <li>
                     <a href="/logout">Odjava</a>
@@ -51,37 +64,38 @@
   
 
     </div>
-    <div class="table-content">
-        <h2>Popis svih ispita:</h2>
-        <table class="table">
-            <thead>
-                    <th></th>
-                    <th>Predmet</th>
-                    <th>Naziv</th>
-                    <th>Vrijeme pocetka</th>
-                    <th>Vrijeme zavrsetka</th>
-                    <th>Prostorija</th>
-                    <th>Trajanje</th>
-                    <th></th>
-            </thead>
-            <tbody id="ispiti-tbody">
-
+    <div class="welcome-text">
+            <div class="table-content">
+                    <h2>Popis svih ispita:</h2>
+                    <table class="table">
+                        <thead>
+                                <th></th>
+                                <th>Predmet</th>
+                                <th>Naziv</th>
+                                <th>Vrijeme pocetka</th>
+                                <th>Vrijeme zavrsetka</th>
+                                <th>Prostorija</th>
+                                <th>Trajanje</th>
+                                <th></th>
+                        </thead>
+                        <tbody id="ispiti-tbody">
             
-
-            </tbody>
-           
-        </table>
-
-   
+                        
+            
+                        </tbody>
+                       
+                    </table>
+            
+               
+                </div>
     </div>
     <!-- /#wrapper -->
 
     <!-- Bootstrap core JavaScript -->
     <script src="/scripts/vendor/jquery/jquery.min.js"></script>
     <script src="/scripts/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="scripts/headerStudent.js"></script>
-    <script src="scripts/uvid.js"></script>
-
+    <script src="scripts/headerProf.js"></script>
+    <script src="scripts/profispiti.js"></script>
 
     <!-- Menu Toggle Script -->
     <script>

@@ -353,7 +353,7 @@ app.get('/prof_dash', (req, res) => {
     });
     app.get('/ispravljeno', (req, res) => {
         if (req.session.user && req.cookies.user_sid) {
-            res.sendFile(__dirname + '/public/prof_ispravljeno.html');
+            res.sendFile(__dirname + '/public/profispiti.html');
         } else {
             res.redirect('/login');
         }           

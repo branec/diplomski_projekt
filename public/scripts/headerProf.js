@@ -19,7 +19,7 @@ document.getElementById("ispravljeni").onclick = function () {
 var parts = url.split("?")
 var username = parts[1];
 
-    location.href = "/ispravljeni?" + username;
+    location.href = "/ispravljeno?" + username;
 };
 
 document.getElementById("studenti").onclick = function () {
