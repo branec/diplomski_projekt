@@ -531,11 +531,12 @@ app.get('/subjects/newSubject', (req, res) => {
 });
 
 app.get('/exams/newExam', (req, res) => {
+    var predmet = req.query.Id;
     var user = getUser(req.query.user);
     if(!user) {
         res.redirect('/login');
     }
-    res.render('noviIspit');
+    res.render('noviIspit', { predmet: predmet});
 });
 
 
