@@ -22,18 +22,11 @@ console.log('error');
 request.send();
 
 
-document.getElementById("gedddtdata").onclick = function () {
-
-
-var premdet = $( "#exams-list option:selected" ).val();
-var inputfiledvalue = document.getElementById("barcode-input").value;
 
 
 
-
-}
-
-
-
+$("#delete-btn").click(function(){
+  $("#canvas-images").empty();
+ });
 
 

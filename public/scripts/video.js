@@ -272,13 +272,13 @@ $('#getdata').click(function(){
            processData: false,
            contentType: false,
         }).done(function(respond){
-
+          alert("Slike uspjesno poslane!");
         });
 
 
         }
 
-        alert("Slike uspjesno poslane!");
+       
         
         
        }); 
