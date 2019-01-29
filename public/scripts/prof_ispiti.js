@@ -3,6 +3,7 @@ var url_string = window.location.href;
 var url = new URL(url_string);
 var user = url.searchParams.get("user");
 var exam = url.searchParams.get("exam");
+var predmet = url.searchParams.get("exam");
 
     request.open('GET', `http://localhost:3000/exams_prof/${user}/${exam}`, true);
     request.onload = function () {
@@ -53,8 +54,13 @@ data.forEach(exam => {
   td7.innerText = exam.Trajanje + " min";
   red.appendChild(td7);
 
-  tablica.appendChild(red);
+  var td8 = document.createElement("td");
+  td8.innerHTML = '<a href="/exams/updateExam?Id=' + exam.Id + '&predmet=' + predmet + '">Azuriraj ispit</a>'
+  red.appendChild(td8);
 
+  tablica.appendChild(red);
+  
+  console.log(exam);
 
   
   var url_string = window.location.href;

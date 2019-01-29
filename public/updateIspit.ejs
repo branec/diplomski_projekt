@@ -1,0 +1,45 @@
+<html>
+    <head>
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+            <link rel="stylesheet" type="text/css" href="/scripts/styles.css">    
+    </head>
+    <body id="updateIspit">
+        <div class="container">
+        <div class="login-form">
+        <div class="main-div">
+            <div class="panel">
+           <h2>Update</h2>
+           <p>Molimo azurirajte ispit</p>
+           </div>
+            <form id="updIspit" method="POST" action="/exams/updateExam">
+                <div>
+                    Ispit ID <br> <input type="text" id="Id" name="Id" placeholder="Id" value="<%= ispit ? ispit : '' %>"> <br>
+                </div>  
+                <div>
+                    Naziv <br> <input type="text" id="Naziv" name="Naziv" placeholder="Naziv"> <br>
+                </div>
+                <div>
+                    Početak ispita <br> <input type="datetime-local" id="VrijemeOd" name="VrijemeOd" placeholder="DD.MM.GGGG. HH:MM"> <br>
+                </div>
+                <div>
+                    Trajanje ispita u minutama<br> <input type="text" id="Trajanje" name="Trajanje" placeholder="Trajanje"> <br>
+                </div>
+                <div>
+                    Prostorija <br> <input type="text" id="Prostorija" name="Prostorija" placeholder="Prostorija"> <br>
+                </div>
+                <div>
+                    Predmet ID <br> <input type="text" id="Predmet" name="Predmet" placeholder="Predmet" value="<%= predmet ? predmet : '' %>"> <br>
+                </div>
+                <br>
+                <button border-top="10px" type="submit" class="btn btn-primary">Ažuriraj</button>
+        
+            </form>
+            </div>
+        </div></div></div>
+        
+        
+        </body>
+
+</html>

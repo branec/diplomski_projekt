@@ -71,7 +71,7 @@ module.exports = function(app) {
     .post(exams.new_exam);
 
     app.route('/exams/updateExam')
-    .put(exams.update_exam);
+    .post(exams.update_exam);
 
     app.route('/exams/deleteExam')
     .delete(exams.delete_exam);

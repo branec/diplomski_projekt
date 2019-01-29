@@ -550,6 +550,16 @@ app.get('/subject/updateSubject', (req, res) => {
     res.render('updatePredmet', { predmet: predmet, zavod: department, korisnik: user.Id });
 });
 
+app.get('/exams/updateExam', (req, res) => {
+    var predmet = req.query.predmet;
+    var ispit = req.query.Id;
+    var user = getUser(req.query.user);
+    if(!user) {
+        res.redirect('/login');
+    }
+    res.render('updateIspit', { ispit: ispit, predmet: predmet});
+});
+
 app.get('/users/newUserPredmet', (req, res) => {
     
     var predmet = req.query.Id;

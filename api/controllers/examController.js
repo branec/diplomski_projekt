@@ -319,21 +319,57 @@ exports.update_exam = function (req, res) {
 
         var id = req.body.Id;
         var name = req.body.Naziv;
-        var from = req.body.VrijemeOd;
-        var to = req.body.VrijemeDo;
+        var from = new Date(req.body.VrijemeOd);
+        //var from = req.body.VrijemeOd;
+        console.log(from);
         var duration = req.body.Trajanje;
+        var to = new Date();
+        to.setTime(from.getTime() + (duration * 60 * 1000));
+        //var to = req.body.VrijemeOd + duration;
+        console.log(to);
+        from = from.getUTCFullYear() + '-' +
+        ('00' + (from.getUTCMonth()+1)).slice(-2) + '-' +
+        ('00' + from.getUTCDate()).slice(-2) + ' ' + 
+        ('00' + from.getUTCHours()).slice(-2) + ':' + 
+        ('00' + from.getUTCMinutes()).slice(-2) + ':' + 
+        ('00' + from.getUTCSeconds()).slice(-2);
+
+        to = to.getUTCFullYear() + '-' +
+        ('00' + (to.getUTCMonth()+1)).slice(-2) + '-' +
+        ('00' + to.getUTCDate()).slice(-2) + ' ' + 
+        ('00' + to.getUTCHours()).slice(-2) + ':' + 
+        ('00' + to.getUTCMinutes()).slice(-2) + ':' + 
+        ('00' + to.getUTCSeconds()).slice(-2);
+
         var room = req.body.Prostorija;
         var subject = req.body.Predmet;
-        var query=`UPDATE Ispit SET Naziv=\'${name}\', VrijemeOd=\'${from}\', VrijemeDo=\'${to}\', Trajanje=\'${duration}\', Prostorija=\'${room}\', Predmet=\'${subject}\ WHERE Id=\'${id}\'`;
-        request.query(query,function(err, recordset) {
-            if(err)
-            res.send(err);
 
-            if(recordset.recordset[0].postoji === 1){
-                res.send(200)
-            }else{
-                res.json({odgovor:"false"})
+        let canUpdate = true
+          Object.keys(req.body).forEach(row => {
+            if(req.body[row] === "") {
+                res.status(400)
+                res.send(row + " is missing")
+                sql.close();
+                canUpdate = false
             }
+            })
+            if(!canUpdate) return
+
+        var query=`UPDATE Ispit SET Naziv='${name}', VrijemeOd='${from}', VrijemeDo='${to}', Trajanje='${duration}', Prostorija='${room}', PredmetId='${subject}' WHERE Id='${id}'`;
+        console.log(req.body, query)
+       
+          request.query(query, function(err, recordset) {
+                if (err) {
+                    sql.close();
+                    res.send(err);
+                    return;
+                  }
+    
+                if(recordset.rowsAffected.length === 1){
+                  res.redirect("/prof_ispiti?user=prof&exam=" + subject + "")
+                }else{
+                  res.json({odgovor:"false"})
+                }
 
             sql.close();
         });
